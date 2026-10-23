@@ -8,7 +8,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function LoginPage() {
-  const [identifier, setIdentifier] = useState(''); // Student ID (e.g. DIB-2026-0901) or Email
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -21,7 +21,6 @@ export default function LoginPage() {
     try {
       let targetEmail = identifier.trim();
 
-      // 1. If user entered a Student ID (not an email format), look up their email
       if (!targetEmail.includes('@')) {
         const { data: userLookup, error: lookupErr } = await supabase
           .rpc('get_user_email_by_identifier', { identifier_input: targetEmail });
@@ -33,7 +32,6 @@ export default function LoginPage() {
         targetEmail = userLookup[0].email;
       }
 
-      // 2. Authenticate user with Supabase
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: targetEmail,
         password: password,
@@ -41,7 +39,6 @@ export default function LoginPage() {
 
       if (authError) throw authError;
 
-      // 3. Fetch user role to route them to the correct dashboard
       const userId = authData.user.id;
       const { data: profile } = await supabase
         .from('profiles')
@@ -51,7 +48,6 @@ export default function LoginPage() {
 
       const userRole = profile?.role || 'student';
 
-      // 4. Redirect based on role
       if (userRole === 'student') {
         window.location.href = '/dashboard/student';
       } else if (userRole === 'teacher') {
@@ -133,4 +129,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}!
+}
