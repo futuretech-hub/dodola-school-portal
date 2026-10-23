@@ -2,13 +2,13 @@ import './globals.css';
 
 export const metadata = {
   title: 'Dodola Ifa Boru Special Boarding School',
-  description: 'Portal for Grades 9-12 Boarding School Management',
+  description: 'Official Boarding School Portal for Grades 9-12',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-50 text-gray-900 antialiased">
+    <html lang="en" className="scroll-smooth">
+      <body className="min-h-screen bg-slate-50 font-sans flex flex-col justify-between">
         {children}
       </body>
     </html>
