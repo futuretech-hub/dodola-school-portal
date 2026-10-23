@@ -1,15 +1,11 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
 export default function CampusLifePage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col justify-between">
-      {/* Header Bar */}
-      <header className="bg-emerald-950 text-white p-4 shadow-md flex justify-between items-center">
-        <a href="/" className="font-bold text-xs sm:text-sm text-emerald-400">← Back to Portal Home</a>
-        <a href="/login" className="text-xs bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded-lg font-bold">Portal Login</a>
-      </header>
+      <Navbar />
 
-      {/* Main Content */}
       <main className="max-w-4xl mx-auto p-6 space-y-6 w-full flex-grow">
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
           <div>
@@ -62,7 +58,6 @@ export default function CampusLifePage() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
         Dodola Ifa Boru Special Boarding School &copy; 2026
       </footer>
