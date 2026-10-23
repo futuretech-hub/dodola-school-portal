@@ -7,12 +7,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  // All navigation items including Login
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Academics', href: '/academics' },
-    { name: 'Campus', href: '/campus-life' },
+    { name: 'Campus Life', href: '/campus-life' },
     { name: 'Achievements', href: '/achievements' },
     { name: 'Login', href: '/login', isLogin: true },
   ];
@@ -21,9 +20,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-emerald-950/95 backdrop-blur-md border-b border-emerald-800/40 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
-        {/* Non-Clickable Official School Logo & Name */}
-        <div className="flex items-center space-x-3 select-none">
-          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-md flex-shrink-0 bg-emerald-900 flex items-center justify-center">
+        {/* Logo & Larger School Name */}
+        <div className="flex items-center space-x-3.5 select-none shrink-0">
+          <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-md flex-shrink-0 bg-emerald-900 flex items-center justify-center">
             <img 
               src="/school-logo.png" 
               alt="Ifa Boru Emblem" 
@@ -31,17 +30,17 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <h1 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
+            <h1 className="text-base sm:text-lg lg:text-xl font-black text-white tracking-tight leading-snug">
               Ifa Boru Boarding
             </h1>
-            <p className="text-[9px] sm:text-[10px] text-emerald-300 font-medium tracking-wide uppercase">
+            <p className="text-[10px] sm:text-xs text-emerald-300 font-semibold tracking-wider uppercase">
               Dodola Secondary School
             </p>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-3 lg:space-x-5">
+        {/* Desktop & Tablet Landscape Navigation Links with Proper Gaps */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 shrink-0">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
 
@@ -50,7 +49,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm px-5 py-2 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 ml-2"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 ml-2"
                 >
                   {link.name}
                 </a>
@@ -61,7 +60,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-semibold transition py-1 relative ${
+                className={`text-sm lg:text-base font-semibold transition py-1 relative whitespace-nowrap ${
                   isActive
                     ? 'text-sky-400 font-bold border-b-2 border-sky-400 pb-1'
                     : 'text-emerald-100 hover:text-emerald-300'
