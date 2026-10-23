@@ -31,10 +31,10 @@ export default function Navbar() {
           </div>
           <div>
             <h1 className="text-base sm:text-lg lg:text-xl font-black text-white tracking-tight leading-snug">
-              Ifa Boru Boarding
+              Dodola Ifa Boru
             </h1>
             <p className="text-[10px] sm:text-xs text-emerald-300 font-semibold tracking-wider uppercase">
-              Dodola Secondary School
+              Boarding Secondary School
             </p>
           </div>
         </div>
