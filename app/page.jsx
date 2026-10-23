@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
       {/* Top Header Navigation Bar */}
       <header className="sticky top-0 z-50 bg-emerald-950/90 backdrop-blur-md border-b border-emerald-800/40 shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -24,13 +24,19 @@ export default function Home() {
             </div>
           </a>
 
-          {/* Independent Page Nav Links */}
-          <nav className="flex items-center space-x-2 sm:space-x-6">
+          {/* Navigation Links */}
+          <nav className="flex items-center space-x-1 sm:space-x-5">
+            <a href="/" className="text-xs sm:text-sm font-bold text-emerald-400 border-b-2 border-emerald-400 px-2 py-1">
+              Home
+            </a>
             <a href="/about" className="text-xs sm:text-sm font-semibold text-emerald-100 hover:text-emerald-300 transition px-2 py-1">
               About
             </a>
             <a href="/academics" className="text-xs sm:text-sm font-semibold text-emerald-100 hover:text-emerald-300 transition px-2 py-1">
               Academics
+            </a>
+            <a href="/campus-life" className="text-xs sm:text-sm font-semibold text-emerald-100 hover:text-emerald-300 transition px-2 py-1">
+              Campus Life
             </a>
             <a href="/achievements" className="text-xs sm:text-sm font-semibold text-emerald-100 hover:text-emerald-300 transition px-2 py-1">
               Achievements
@@ -46,7 +52,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="flex-grow flex items-center justify-center bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950 px-4 py-20 relative overflow-hidden">
+      <section className="flex-grow flex items-center justify-center bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950 px-4 py-16 sm:py-24 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
           <span className="inline-block bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
             Grade 9 – 12 STEM & Boarding Excellence
@@ -75,18 +81,18 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Portal Feature Cards Highlights */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-12 text-left">
+          {/* Portal Feature Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 text-left">
             <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
-              <div className="text-emerald-400 text-xl font-bold mb-1">🎓 Academic Hub</div>
+              <div className="text-emerald-400 text-lg font-bold mb-1">🎓 Academic Hub</div>
               <p className="text-xs text-slate-300">Gradebook access, continuous assessment tracking, and report cards.</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
-              <div className="text-emerald-400 text-xl font-bold mb-1">🏡 Residence & Exeats</div>
+              <div className="text-emerald-400 text-lg font-bold mb-1">🏡 Residence & Exeats</div>
               <p className="text-xs text-slate-300">Automated leave requests, warden approvals, and residence logs.</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
-              <div className="text-emerald-400 text-xl font-bold mb-1">🛡️ Digital Gate Security</div>
+              <div className="text-emerald-400 text-lg font-bold mb-1">🛡️ Digital Gate Security</div>
               <p className="text-xs text-slate-300">QR-code encrypted student badges for instant gate verification.</p>
             </div>
           </div>
@@ -94,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 border-t border-white/10 py-8 px-4 text-center text-xs text-slate-400">
+      <footer className="bg-slate-950 border-t border-white/10 py-6 px-4 text-center text-xs text-slate-400">
         <div className="max-w-5xl mx-auto space-y-2">
           <p className="font-semibold text-slate-200">Dodola Ifa Boru Special Boarding School</p>
           <p className="text-slate-500">Official Student & Staff Portal &copy; 2026. All rights reserved.</p>
