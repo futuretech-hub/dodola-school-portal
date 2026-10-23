@@ -72,12 +72,16 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 border-t border-white/10 py-6 px-4 text-center text-xs text-slate-400 relative z-20">
-        <div className="max-w-5xl mx-auto space-y-2">
-          <p className="font-semibold text-slate-200">Dodola Ifa Boru Special Boarding School</p>
-          <p className="text-slate-500">Official Student & Staff Portal &copy; 2026. All rights reserved.</p>
-        </div>
+      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-8 px-4 text-center text-xs text-slate-300 relative z-20 flex flex-col items-center space-y-2">
+        <p className="font-medium">
+          &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
+        </p>
+        <p className="text-[11px] text-slate-400 space-x-2">
+          <a href="#" className="hover:text-white transition">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" className="hover:text-white transition">Terms of Use</a>
+        </p>
       </footer>
     </div>
   );
-}
+        }
