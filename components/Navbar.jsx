@@ -18,11 +18,11 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-emerald-950/95 backdrop-blur-md border-b border-emerald-800/40 shadow-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         
-        {/* Logo & Larger School Name */}
-        <div className="flex items-center space-x-3.5 select-none shrink-0">
-          <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-md flex-shrink-0 bg-emerald-900 flex items-center justify-center">
+        {/* Logo & School Name */}
+        <div className="flex items-center space-x-3 select-none shrink-0">
+          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-md flex-shrink-0 bg-emerald-900 flex items-center justify-center">
             <img 
               src="/school-logo.png" 
               alt="Ifa Boru Emblem" 
@@ -30,17 +30,17 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <h1 className="text-base sm:text-lg lg:text-xl font-black text-white tracking-tight leading-snug">
+            <h1 className="text-sm sm:text-base lg:text-lg font-black text-white tracking-tight leading-snug">
               Dodola Ifa Boru
             </h1>
-            <p className="text-[10px] sm:text-xs text-emerald-300 font-semibold tracking-wider uppercase">
+            <p className="text-[9px] sm:text-[10px] text-emerald-300 font-semibold tracking-wider uppercase">
               Boarding Secondary School
             </p>
           </div>
         </div>
 
-        {/* Desktop & Tablet Landscape Navigation Links with Proper Gaps */}
-        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 shrink-0">
+        {/* Desktop & Tablet Navigation Links with Balanced Responsive Spacing */}
+        <nav className="hidden md:flex items-center justify-end flex-grow max-w-2xl space-x-3 lg:space-x-6 xl:space-x-8">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
 
@@ -49,7 +49,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 ml-2"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-xs lg:text-sm px-4 lg:px-5 py-2 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 whitespace-nowrap ml-2"
                 >
                   {link.name}
                 </a>
@@ -60,7 +60,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm lg:text-base font-semibold transition py-1 relative whitespace-nowrap ${
+                className={`text-xs lg:text-sm font-semibold transition py-1 relative whitespace-nowrap ${
                   isActive
                     ? 'text-sky-400 font-bold border-b-2 border-sky-400 pb-1'
                     : 'text-emerald-100 hover:text-emerald-300'
