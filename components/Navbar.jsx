@@ -58,7 +58,7 @@ export default function Navbar() {
             href="/login"
             className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md transition ml-2"
           >
-            Portal Login
+            Login
           </a>
         </nav>
       </div>
