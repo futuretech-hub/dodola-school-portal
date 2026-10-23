@@ -7,12 +7,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  // All navigation items including Login
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Academics', href: '/academics' },
     { name: 'Campus', href: '/campus-life' },
     { name: 'Achievements', href: '/achievements' },
+    { name: 'Login', href: '/login', isLogin: true },
   ];
 
   return (
@@ -39,9 +41,22 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+        <nav className="hidden md:flex items-center space-x-3 lg:space-x-5">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+
+            if (link.isLogin) {
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm px-5 py-2 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 ml-2"
+                >
+                  {link.name}
+                </a>
+              );
+            }
+
             return (
               <a
                 key={link.name}
@@ -56,27 +71,13 @@ export default function Navbar() {
               </a>
             );
           })}
-
-          <a
-            href="/login"
-            className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl shadow-md transition ml-2"
-          >
-            Portal Login
-          </a>
         </nav>
 
         {/* Mobile Hamburger Button */}
-        <div className="flex md:hidden items-center space-x-2">
-          <a
-            href="/login"
-            className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow-md transition"
-          >
-            Login
-          </a>
-          
+        <div className="flex md:hidden items-center">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-xl bg-emerald-900/50 text-emerald-200 hover:text-white focus:outline-none border border-emerald-700/50"
+            className="p-2.5 rounded-xl bg-emerald-900/60 text-emerald-200 hover:text-white focus:outline-none border border-emerald-700/50 shadow-md"
             aria-label="Toggle Menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,15 +93,29 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Drawer */}
       {isOpen && (
-        <div className="md:hidden bg-emerald-950 border-b border-emerald-800/60 px-4 pt-2 pb-6 space-y-2 shadow-2xl animate-fadeIn">
+        <div className="md:hidden bg-emerald-950/98 backdrop-blur-xl border-b border-emerald-800/60 px-4 pt-3 pb-6 space-y-2 shadow-2xl animate-fadeIn">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+
+            if (link.isLogin) {
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="block text-center mt-3 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-extrabold text-sm py-3 rounded-xl shadow-lg"
+                >
+                  {link.name} →
+                </a>
+              );
+            }
+
             return (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
+                className={`block px-4 py-3 rounded-xl text-sm font-semibold transition ${
                   isActive
                     ? 'bg-emerald-900/80 text-sky-400 font-bold border-l-4 border-sky-400'
                     : 'text-emerald-100 hover:bg-emerald-900/40 hover:text-white'
