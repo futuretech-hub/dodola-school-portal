@@ -40,7 +40,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop & Tablet Navigation Links with Balanced Responsive Spacing */}
-        <nav className="hidden md:flex items-center justify-end flex-grow max-w-2xl space-x-3 lg:space-x-6 xl:space-x-8">
+        <nav className="hidden md:flex items-center justify-end flex-grow max-w-2xl space-x-4 lg:space-x-7 xl:space-x-9">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
 
