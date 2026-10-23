@@ -10,7 +10,7 @@ export default function Navbar() {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Academics', href: '/academics' },
-    { name: 'Campus', href: '/campus-life' },
+    { name: 'Campus Life', href: '/campus-life' },
     { name: 'Achievements', href: '/achievements' },
   ];
 
@@ -18,22 +18,22 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-emerald-950/95 backdrop-blur-md border-b border-emerald-800/40 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
-        {/* Logo & School Name */}
-        <a href="/" className="flex items-center space-x-3">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 shadow-md flex-shrink-0">
-            <div className="w-full h-full bg-emerald-950 rounded-[14px] flex items-center justify-center font-black text-emerald-400 text-base border border-emerald-500/30">
-              DIB
-            </div>
-          </div>
+        {/* Non-Clickable Official School Logo & Name */}
+        <div className="flex items-center space-x-3 select-none">
+          <img 
+            src="/school-logo.png" 
+            alt="Ifa Boru Logo" 
+            className="w-12 h-12 rounded-full object-cover border-2 border-emerald-500/50 shadow-md flex-shrink-0" 
+          />
           <div>
             <h1 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
-              Dodola Ifa Boru
+              Ifa Boru Boarding
             </h1>
             <p className="text-[10px] text-emerald-300 font-medium tracking-wide uppercase">
-              Special Boarding School
+              Dodola Secondary School
             </p>
           </div>
-        </a>
+        </div>
 
         {/* Navigation Links with Active Underline State */}
         <nav className="flex items-center space-x-1 sm:space-x-5">
@@ -58,7 +58,7 @@ export default function Navbar() {
             href="/login"
             className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md transition ml-2"
           >
-            Login
+            Portal Login
           </a>
         </nav>
       </div>
