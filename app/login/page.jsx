@@ -1,24 +1,16 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 
--export default function LoginPage() {
-+export default function LoginPage() {
-   return (
--    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
-+    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
-+      <Navbar />
-+
--      {/* Simple Login Header Bar */}
--      <header className="bg-emerald-950 text-white p-4 shadow-md flex justify-between items-center">
--        <a href="/" className="font-bold text-xs sm:text-sm text-emerald-400">← Back to Portal Home</a>
--        <span className="text-xs text-emerald-300 font-medium">Secure Portal Authentication</span>
--      </header>
+export default function LoginPage() {
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
+      <Navbar />
 
       {/* Login Form Section */}
       <main className="flex-grow flex items-center justify-center p-4 bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950">
         <div className="max-w-md w-full bg-slate-900/90 border border-emerald-500/30 p-8 rounded-3xl shadow-2xl backdrop-blur-md space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl mx-auto flex items-center justify-center text-emerald-400 text-2xl font-black">
+            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl mx-auto flex items-center justify-center text-emerald-400 text-2xl font-black shadow-inner">
               🔒
             </div>
             <h1 className="text-xl sm:text-2xl font-extrabold text-white">Portal Access</h1>
