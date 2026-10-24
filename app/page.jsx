@@ -46,7 +46,7 @@ export default function Home() {
             <span className="h-px bg-gradient-to-r from-transparent to-amber-400/60 w-12 sm:w-28"></span>
             <span className="text-amber-400 text-xs sm:text-sm">✦</span>
             <span className="text-amber-300 font-semibold text-[11px] sm:text-sm tracking-wider uppercase">
-              The Official Center of the Fountain of Stars
+              The Center of the Fountain of Stars
             </span>
             <span className="text-amber-400 text-xs sm:text-sm">✦</span>
             <span className="h-px bg-gradient-to-l from-transparent to-amber-400/60 w-12 sm:w-28"></span>
