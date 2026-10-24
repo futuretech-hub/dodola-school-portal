@@ -13,7 +13,7 @@ export default function Navbar() {
     { name: 'Academics', href: '/academics' },
     { name: 'Campus Life', href: '/campus-life' },
     { name: 'Achievements', href: '/achievements' },
-    { name: 'Login', href: '/login', isLogin: true },
+    { name: 'Portal', href: '/login', isLogin: true },
   ];
 
   return (
@@ -49,8 +49,16 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-xs lg:text-sm px-4 lg:px-5 py-2 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 whitespace-nowrap ml-2"
+                  className={`text-xs lg:text-sm font-semibold transition py-1 relative whitespace-nowrap flex items-center gap-1.5 ${
+                    isActive
+                      ? 'text-sky-400 font-bold border-b-2 border-sky-400 pb-1'
+                      : 'text-emerald-100 hover:text-emerald-300'
+                  }`}
                 >
+                  {/* Lock Icon */}
+                  <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
                   {link.name}
                 </a>
               );
@@ -102,9 +110,16 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block text-center mt-3 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-extrabold text-sm py-3 rounded-xl shadow-lg"
+                  className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                    isActive
+                      ? 'bg-emerald-900/80 text-sky-400 font-bold border-l-4 border-sky-400'
+                      : 'text-emerald-100 hover:bg-emerald-900/40 hover:text-white'
+                  }`}
                 >
-                  {link.name} →
+                  <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  {link.name}
                 </a>
               );
             }
