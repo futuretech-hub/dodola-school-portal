@@ -7,7 +7,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero / Landing Section with Campus Background */}
-      <section className="relative flex-grow flex flex-col items-center justify-center px-4 py-10 sm:py-16 overflow-hidden">
+      <section className="relative flex-grow flex flex-col items-center justify-center px-4 pt-10 pb-2 overflow-hidden">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0 scale-105 transform transition-transform duration-1000"
@@ -15,10 +15,10 @@ export default function Home() {
         />
         
         {/* Dark Gradient Overlay for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-emerald-950/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-emerald-950/50 z-10" />
 
-        {/* Main Transparent Content Container */}
-        <div className="max-w-5xl w-full mx-auto text-center relative z-20 bg-slate-950/35 backdrop-blur-sm border border-amber-400/30 p-6 sm:p-12 rounded-3xl shadow-2xl space-y-8">
+        {/* Main Ultra-Transparent Content Container */}
+        <div className="max-w-5xl w-full mx-auto text-center relative z-20 bg-slate-950/20 backdrop-blur-[2px] border border-amber-400/30 p-6 sm:p-12 rounded-3xl shadow-2xl space-y-7">
           
           {/* Top 8-Point Shiny Star with Lines Disappearing to Sides */}
           <div className="flex items-center justify-center space-x-3 -mt-2">
@@ -56,23 +56,25 @@ export default function Home() {
             <p className="text-sm sm:text-lg text-amber-100/90 italic font-serif pt-1">
               Where Every Mind Shines and Every Future Begins
             </p>
+
+            {/* Small Stylish Line Below Subtitle & Above Description */}
+            <div className="flex items-center justify-center space-x-2 pt-2">
+              <span className="h-px bg-gradient-to-r from-transparent to-amber-400/70 w-12 sm:w-20"></span>
+              <span className="w-1.5 h-1.5 rotate-45 bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span>
+              <span className="h-px bg-gradient-to-l from-transparent to-amber-400/70 w-12 sm:w-20"></span>
+            </div>
           </div>
 
           {/* Core School Statement Paragraph */}
-          <p className="text-xs sm:text-sm text-slate-200 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow-sm">
+          <p className="text-xs sm:text-sm text-slate-100 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow-md">
             We believe every student possesses a unique light, exceptional talents, and the potential to achieve greatness. At Dodola Ifa Boru Special Boarding School, we provide a formal, supportive, and inspiring learning environment where students gain knowledge, develop character, discover their abilities, and prepare confidently for the future. Through academic excellence, creativity, discipline, and dedicated guidance, we cultivate a community of bright minds and strong values. Together, we prepare tomorrow&apos;s leaders, innovators, and achievers to make a meaningful difference in the world.
           </p>
 
-          {/* Connected Line Fading From Center to Sides */}
-          <div className="pt-2 flex items-center justify-center">
-            <div className="h-px w-full max-w-2xl bg-gradient-to-r from-transparent via-amber-400/80 to-transparent"></div>
-          </div>
-
         </div>
 
-        {/* Separated Feature Pillars Bar (Matching Image Design) */}
-        <div className="max-w-6xl w-full mx-auto relative z-20 mt-8 mb-2 px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-0 py-4 border-t border-amber-400/30 items-center">
+        {/* Separated Feature Pillars Bar */}
+        <div className="max-w-6xl w-full mx-auto relative z-20 mt-6 mb-1 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-0 py-2 border-t border-amber-400/30 items-center">
             
             {/* Academic Excellence */}
             <div className="flex items-center justify-center md:justify-start gap-3.5 px-3 md:border-r border-amber-400/30">
@@ -130,8 +132,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer (Copyright Only) */}
-      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-6 px-4 text-center text-xs text-slate-300 relative z-20">
+      {/* Footer */}
+      <footer className="bg-slate-950/85 backdrop-blur-md border-t border-amber-400/30 py-5 px-4 text-center text-xs text-slate-300 relative z-20">
         <p className="font-medium">
           &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
         </p>
