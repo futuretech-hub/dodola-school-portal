@@ -6,8 +6,8 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
       <Navbar />
 
-      {/* Hero Section with Full-Width Campus Background & Gradient Overlay */}
-      <section className="relative flex-grow flex items-center justify-center px-4 py-20 sm:py-32 overflow-hidden">
+      {/* Hero / Landing Section with Full-Width Campus Background */}
+      <section className="relative flex-grow flex items-center justify-center px-4 py-16 sm:py-24 overflow-hidden">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0 scale-105 transform transition-transform duration-1000"
@@ -15,73 +15,104 @@ export default function Home() {
         />
         
         {/* Dark Gradient Overlay for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-emerald-950/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-emerald-950/70 z-10" />
 
-        {/* Hero Content */}
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-20">
-          <span className="inline-block bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
-            Grade 9 – 12 STEM & Boarding Excellence
-          </span>
+        {/* Main Content Card Container with Gold Border */}
+        <div className="max-w-5xl mx-auto text-center relative z-20 bg-slate-950/60 backdrop-blur-md border border-amber-400/40 p-6 sm:p-12 rounded-3xl shadow-2xl space-y-8">
           
-          <h1 className="text-3xl sm:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-md">
-            Empowering the Next Generation of Innovators & Leaders
-          </h1>
-          
-          <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto font-normal leading-relaxed drop-shadow">
-            Welcome to the official portal of Dodola Ifa Boru Special Boarding School. Access real-time academic records, residence exeat tracking, and secure digital student IDs.
-          </p>
+          {/* Top Star Accent */}
+          <div className="flex justify-center -mb-4">
+            <span className="text-amber-400 text-2xl">✦</span>
+          </div>
 
-          <div className="pt-4 flex flex-col items-center space-y-3">
-            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-              <a 
-                href="/login" 
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5"
-              >
-                Access Student & Staff Portal →
-              </a>
-              <a 
-                href="/about" 
-                className="bg-slate-900/60 hover:bg-slate-900/80 text-white font-bold text-sm px-8 py-4 rounded-2xl border border-white/20 backdrop-blur-md transition"
-              >
-                Explore Our Campus
-              </a>
-            </div>
+          {/* Heading Section */}
+          <div className="space-y-3">
+            <h1 className="text-2xl sm:text-5xl font-black tracking-wide leading-tight text-white uppercase font-serif drop-shadow-md">
+              Welcome to Dodola Ifa Boru Special Boarding School
+            </h1>
             
-            {/* Optional Subtitle Text */}
-            <p className="text-xs text-emerald-300 font-medium tracking-wide pt-1">
-              Real-time grades &bull; Exeat tracking &bull; Digital student IDs
+            {/* Sub-divider with Stars */}
+            <div className="flex items-center justify-center space-x-4 pt-2">
+              <span className="h-px bg-gradient-to-r from-transparent to-amber-400/60 w-16 sm:w-32"></span>
+              <span className="text-amber-400 text-sm">✦</span>
+              <span className="text-amber-300 font-semibold text-xs sm:text-sm tracking-wider uppercase">
+                The Official Center of the Fountain of Stars
+              </span>
+              <span className="text-amber-400 text-sm">✦</span>
+              <span className="h-px bg-gradient-to-l from-transparent to-amber-400/60 w-16 sm:w-32"></span>
+            </div>
+
+            <p className="text-sm sm:text-lg text-amber-100/90 italic font-serif pt-1">
+              Where Every Mind Shines and Every Future Begins
             </p>
           </div>
 
-          {/* Elevated Feature Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-12 text-left">
-            <div className="bg-slate-900/80 border border-white/15 p-5 rounded-2xl backdrop-blur-md shadow-xl hover:border-emerald-500/50 transition">
-              <div className="text-emerald-400 text-lg font-bold mb-1">🎓 Academic Hub</div>
-              <p className="text-xs text-slate-300">Gradebook access, continuous assessment tracking, and report cards.</p>
+          {/* Core School Statement Paragraph */}
+          <p className="text-xs sm:text-sm text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
+            We believe every student possesses a unique light, exceptional talents, and the potential to achieve greatness. At Dodola Ifa Boru Special Boarding School, we provide a formal, supportive, and inspiring learning environment where students gain knowledge, develop character, discover their abilities, and prepare confidently for the future. Through academic excellence, creativity, discipline, and dedicated guidance, we cultivate a community of bright minds and strong values. Together, we prepare tomorrow&apos;s leaders, innovators, and achievers to make a meaningful difference in the world.
+          </p>
+
+          {/* Portal Access Button */}
+          <div className="pt-2">
+            <a 
+              href="/login" 
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold text-sm px-8 py-3.5 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5"
+            >
+              <span>🔒</span> Access Portal Login →
+            </a>
+          </div>
+
+          {/* 4 Feature Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-6 border-t border-amber-400/20 text-left">
+            <div className="bg-slate-900/80 border border-amber-400/20 p-4 rounded-2xl backdrop-blur-sm space-y-1">
+              <div className="text-amber-400 text-base font-bold flex items-center gap-2">
+                <span>★</span> Academic Excellence
+              </div>
+              <p className="text-[11px] text-slate-300">Rigorous. Inspiring. Future-Focused.</p>
             </div>
-            <div className="bg-slate-900/80 border border-white/15 p-5 rounded-2xl backdrop-blur-md shadow-xl hover:border-emerald-500/50 transition">
-              <div className="text-emerald-400 text-lg font-bold mb-1">🏡 Residence & Exeats</div>
-              <p className="text-xs text-slate-300">Automated leave requests, warden approvals, and residence logs.</p>
+
+            <div className="bg-slate-900/80 border border-amber-400/20 p-4 rounded-2xl backdrop-blur-sm space-y-1">
+              <div className="text-amber-400 text-base font-bold flex items-center gap-2">
+                <span>🏛️</span> Character & Values
+              </div>
+              <p className="text-[11px] text-slate-300">Integrity. Respect. Leadership.</p>
             </div>
-            <div className="bg-slate-900/80 border border-white/15 p-5 rounded-2xl backdrop-blur-md shadow-xl hover:border-emerald-500/50 transition">
-              <div className="text-emerald-400 text-lg font-bold mb-1">🛡️ Digital Gate Security</div>
-              <p className="text-xs text-slate-300">QR-code encrypted student badges for instant gate verification.</p>
+
+            <div className="bg-slate-900/80 border border-amber-400/20 p-4 rounded-2xl backdrop-blur-sm space-y-1">
+              <div className="text-amber-400 text-base font-bold flex items-center gap-2">
+                <span>🌱</span> Personal Growth
+              </div>
+              <p className="text-[11px] text-slate-300">Discover. Develop. Achieve.</p>
+            </div>
+
+            <div className="bg-slate-900/80 border border-amber-400/20 p-4 rounded-2xl backdrop-blur-sm space-y-1">
+              <div className="text-amber-400 text-base font-bold flex items-center gap-2">
+                <span>👥</span> Global Impact
+              </div>
+              <p className="text-[11px] text-slate-300">Prepared to Lead. Inspired to Serve.</p>
             </div>
           </div>
+
+          {/* Bottom Merged Line with Center Star */}
+          <div className="pt-6 flex items-center justify-center space-x-3">
+            <span className="h-px bg-gradient-to-r from-transparent to-amber-400 w-24 sm:w-48"></span>
+            <span className="text-amber-400 text-xs">✦</span>
+            <span className="text-amber-300 font-serif italic text-xs sm:text-sm tracking-widest">
+              Shine. Serve. Succeed.
+            </span>
+            <span className="text-amber-400 text-xs">✦</span>
+            <span className="h-px bg-gradient-to-l from-transparent to-amber-400 w-24 sm:w-48"></span>
+          </div>
+
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-8 px-4 text-center text-xs text-slate-300 relative z-20 flex flex-col items-center space-y-2">
+      {/* Footer (Copyright Only, No Privacy/Terms) */}
+      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-6 px-4 text-center text-xs text-slate-300 relative z-20">
         <p className="font-medium">
           &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
-        </p>
-        <p className="text-[11px] text-slate-400 space-x-2">
-          <a href="#" className="hover:text-white transition">Privacy Policy</a>
-          <span>|</span>
-          <a href="#" className="hover:text-white transition">Terms of Use</a>
         </p>
       </footer>
     </div>
   );
-        }
+}
