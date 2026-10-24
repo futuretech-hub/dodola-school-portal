@@ -1,132 +1,78 @@
-'use client';
+import React from 'react';
+import Navbar from '../components/Navbar';
 
-import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+-export default function LoginPage() {
++export default function LoginPage() {
+   return (
+-    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
++    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
++      <Navbar />
++
+-      {/* Simple Login Header Bar */}
+-      <header className="bg-emerald-950 text-white p-4 shadow-md flex justify-between items-center">
+-        <a href="/" className="font-bold text-xs sm:text-sm text-emerald-400">← Back to Portal Home</a>
+-        <span className="text-xs text-emerald-300 font-medium">Secure Portal Authentication</span>
+-      </header>
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      {/* Login Form Section */}
+      <main className="flex-grow flex items-center justify-center p-4 bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950">
+        <div className="max-w-md w-full bg-slate-900/90 border border-emerald-500/30 p-8 rounded-3xl shadow-2xl backdrop-blur-md space-y-6">
+          <div className="text-center space-y-2">
+            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl mx-auto flex items-center justify-center text-emerald-400 text-2xl font-black">
+              🔒
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-white">Portal Access</h1>
+            <p className="text-xs text-slate-400">
+              Sign in to access your grades, exeat requests, and digital ID.
+            </p>
+          </div>
 
-export default function LoginPage() {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+          <form className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Student ID / Staff Email</label>
+              <input 
+                type="text" 
+                placeholder="e.g. DIB/1042/26" 
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
+              />
+            </div>
 
-  async function handleLogin(e) {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMsg('');
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
+              />
+            </div>
 
-    try {
-      let targetEmail = identifier.trim();
+            <button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 mt-2"
+            >
+              Sign In to Portal
+            </button>
+          </form>
 
-      if (!targetEmail.includes('@')) {
-        const { data: userLookup, error: lookupErr } = await supabase
-          .rpc('get_user_email_by_identifier', { identifier_input: targetEmail });
-
-        if (lookupErr || !userLookup || userLookup.length === 0) {
-          throw new Error('Student ID not found. Please check your ID code.');
-        }
-
-        targetEmail = userLookup[0].email;
-      }
-
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: targetEmail,
-        password: password,
-      });
-
-      if (authError) throw authError;
-
-      const userId = authData.user.id;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', userId)
-        .single();
-
-      const userRole = profile?.role || 'student';
-
-      if (userRole === 'student') {
-        window.location.href = '/dashboard/student';
-      } else if (userRole === 'teacher') {
-        window.location.href = '/dashboard/teacher';
-      } else if (userRole === 'warden') {
-        window.location.href = '/dashboard/warden';
-      } else if (userRole === 'security_guard') {
-        window.location.href = '/dashboard/security';
-      } else {
-        window.location.href = '/dashboard/admin';
-      }
-
-    } catch (err) {
-      setErrorMsg(err.message || 'Login failed. Check your ID/Password.');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 font-sans">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-emerald-800">
-            Dodola Ifa Boru
-          </h1>
-          <p className="text-xs font-semibold text-emerald-600 uppercase tracking-widest mt-1">
-            Special Boarding School Portal
-          </p>
+          <div className="text-center pt-2">
+            <a href="/" className="text-xs text-emerald-400 hover:underline">
+              ← Return to Home Landing Page
+            </a>
+          </div>
         </div>
+      </main>
 
-        {errorMsg && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium">
-            {errorMsg}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">
-              Student ID / Email
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. DIB-2026-0901"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-emerald-700 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-800 transition disabled:opacity-50 text-sm"
-          >
-            {loading ? 'Authenticating...' : 'Sign In to Portal'}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center text-xs text-gray-400">
-          Grade 9–12 Boarding Management System
-        </div>
-      </div>
+      {/* Footer */}
+      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-6 px-4 text-center text-xs text-slate-300 flex flex-col items-center space-y-1">
+        <p className="font-medium">
+          &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
+        </p>
+        <p className="text-[11px] text-slate-400 space-x-2">
+          <a href="#" className="hover:text-white transition">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" className="hover:text-white transition">Terms of Use</a>
+        </p>
+      </footer>
     </div>
   );
 }
