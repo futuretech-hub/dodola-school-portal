@@ -7,7 +7,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero / Landing Section with Campus Background */}
-      <section className="relative flex-grow flex flex-col items-center justify-center px-4 py-12 sm:py-20 overflow-hidden">
+      <section className="relative flex-grow flex flex-col items-center justify-center px-4 py-10 sm:py-16 overflow-hidden">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0 scale-105 transform transition-transform duration-1000"
@@ -24,7 +24,7 @@ export default function Home() {
           <div className="flex items-center justify-center space-x-3 -mt-2">
             <span className="h-px bg-gradient-to-r from-transparent via-amber-400/80 to-amber-400 w-24 sm:w-48"></span>
             
-            {/* 8-Point Shiny Star SVG (4 large tips, 4 small tips) */}
+            {/* 8-Point Shiny Star SVG */}
             <svg 
               className="w-7 h-7 sm:w-8 sm:h-8 text-amber-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]" 
               viewBox="0 0 24 24" 
@@ -63,47 +63,69 @@ export default function Home() {
             We believe every student possesses a unique light, exceptional talents, and the potential to achieve greatness. At Dodola Ifa Boru Special Boarding School, we provide a formal, supportive, and inspiring learning environment where students gain knowledge, develop character, discover their abilities, and prepare confidently for the future. Through academic excellence, creativity, discipline, and dedicated guidance, we cultivate a community of bright minds and strong values. Together, we prepare tomorrow&apos;s leaders, innovators, and achievers to make a meaningful difference in the world.
           </p>
 
-          {/* Bottom Merged Line with Center Star */}
-          <div className="pt-4 flex items-center justify-center space-x-3">
-            <span className="h-px bg-gradient-to-r from-transparent to-amber-400 w-24 sm:w-48"></span>
-            <span className="text-amber-400 text-xs">✦</span>
-            <span className="text-amber-300 font-serif italic text-xs sm:text-sm tracking-widest">
-              Shine. Serve. Succeed.
-            </span>
-            <span className="text-amber-400 text-xs">✦</span>
-            <span className="h-px bg-gradient-to-l from-transparent to-amber-400 w-24 sm:w-48"></span>
+          {/* Connected Line Fading From Center to Sides */}
+          <div className="pt-2 flex items-center justify-center">
+            <div className="h-px w-full max-w-2xl bg-gradient-to-r from-transparent via-amber-400/80 to-transparent"></div>
           </div>
 
         </div>
 
-        {/* Separated Feature Pillars Below Container */}
-        <div className="max-w-5xl w-full mx-auto relative z-20 mt-8 grid grid-cols-1 sm:grid-cols-4 gap-4 text-left">
-          <div className="bg-slate-950/40 border border-amber-400/25 p-4 rounded-2xl backdrop-blur-md space-y-1 hover:border-amber-400/50 transition">
-            <div className="text-amber-400 text-sm font-bold flex items-center gap-2">
-              <span>★</span> Academic Excellence
+        {/* Separated Feature Pillars Bar (Matching Image Design) */}
+        <div className="max-w-6xl w-full mx-auto relative z-20 mt-8 mb-2 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-0 py-4 border-t border-amber-400/30 items-center">
+            
+            {/* Academic Excellence */}
+            <div className="flex items-center justify-center md:justify-start gap-3.5 px-3 md:border-r border-amber-400/30">
+              <span className="text-amber-400 text-2xl sm:text-3xl shrink-0">★</span>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold text-amber-100 tracking-wider uppercase font-serif">
+                  Academic Excellence
+                </h3>
+                <p className="text-[10px] sm:text-xs text-slate-300/90 leading-tight">
+                  Rigorous. Inspiring. Future-Focused.
+                </p>
+              </div>
             </div>
-            <p className="text-[11px] text-slate-300">Rigorous. Inspiring. Future-Focused.</p>
-          </div>
 
-          <div className="bg-slate-950/40 border border-amber-400/25 p-4 rounded-2xl backdrop-blur-md space-y-1 hover:border-amber-400/50 transition">
-            <div className="text-amber-400 text-sm font-bold flex items-center gap-2">
-              <span>🏛️</span> Character & Values
+            {/* Character & Values */}
+            <div className="flex items-center justify-center md:justify-start gap-3.5 px-3 md:border-r border-amber-400/30">
+              <span className="text-amber-400 text-2xl sm:text-3xl shrink-0">🏛️</span>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold text-amber-100 tracking-wider uppercase font-serif">
+                  Character &amp; Values
+                </h3>
+                <p className="text-[10px] sm:text-xs text-slate-300/90 leading-tight">
+                  Integrity. Respect. Leadership.
+                </p>
+              </div>
             </div>
-            <p className="text-[11px] text-slate-300">Integrity. Respect. Leadership.</p>
-          </div>
 
-          <div className="bg-slate-950/40 border border-amber-400/25 p-4 rounded-2xl backdrop-blur-md space-y-1 hover:border-amber-400/50 transition">
-            <div className="text-amber-400 text-sm font-bold flex items-center gap-2">
-              <span>🌱</span> Personal Growth
+            {/* Personal Growth */}
+            <div className="flex items-center justify-center md:justify-start gap-3.5 px-3 md:border-r border-amber-400/30">
+              <span className="text-amber-400 text-2xl sm:text-3xl shrink-0">🌱</span>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold text-amber-100 tracking-wider uppercase font-serif">
+                  Personal Growth
+                </h3>
+                <p className="text-[10px] sm:text-xs text-slate-300/90 leading-tight">
+                  Discover. Develop. Achieve.
+                </p>
+              </div>
             </div>
-            <p className="text-[11px] text-slate-300">Discover. Develop. Achieve.</p>
-          </div>
 
-          <div className="bg-slate-950/40 border border-amber-400/25 p-4 rounded-2xl backdrop-blur-md space-y-1 hover:border-amber-400/50 transition">
-            <div className="text-amber-400 text-sm font-bold flex items-center gap-2">
-              <span>👥</span> Global Impact
+            {/* Global Impact */}
+            <div className="flex items-center justify-center md:justify-start gap-3.5 px-3">
+              <span className="text-amber-400 text-2xl sm:text-3xl shrink-0">👥</span>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold text-amber-100 tracking-wider uppercase font-serif">
+                  Global Impact
+                </h3>
+                <p className="text-[10px] sm:text-xs text-slate-300/90 leading-tight">
+                  Prepared to Lead. Inspired to Serve.
+                </p>
+              </div>
             </div>
-            <p className="text-[11px] text-slate-300">Prepared to Lead. Inspired to Serve.</p>
+
           </div>
         </div>
       </section>
