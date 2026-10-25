@@ -45,40 +45,38 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 2. LOWER BODY SECTION (Unified Paragraph Narrative + Classroom Image) */}
+        {/* 2. LOWER BODY SECTION (Story, Mission, & Vision with Individual Headers) */}
         <section className="relative z-20 bg-gradient-to-b from-slate-950 via-emerald-950/80 to-slate-950 py-12 px-4 flex-grow">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-4xl mx-auto space-y-8">
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              
-              {/* Story, Mission & Vision Narrative Paragraphs */}
-              <div className="space-y-4">
-                <h2 className="text-2xl sm:text-3xl font-bold text-amber-300 font-serif tracking-wide">
-                  Our Story, Mission &amp; Vision
-                </h2>
-                
-                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
-                  Dodola Ifa Boru Special Boarding School was established to provide an exceptional residential learning experience for high-achieving Grade 9 to 12 students. By merging rigorous academic preparation with a structured boarding environment, we cultivate discipline, curiosity, and mutual respect among scholars from diverse backgrounds.
-                </p>
+            {/* Story Section */}
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+                Our Story
+              </h2>
+              <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
+                Dodola Ifa Boru Special Boarding School was established to provide an exceptional residential learning experience for high-achieving Grade 9 to 12 students. By merging rigorous academic preparation with a structured boarding environment, we cultivate discipline, curiosity, and mutual respect among scholars from diverse backgrounds.
+              </p>
+            </div>
 
-                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
-                  Our mission is to deliver high-caliber, holistic secondary education that empowers talented youth through academic mastery, technological literacy, personal responsibility, and leadership development.
-                </p>
+            {/* Mission Section */}
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+                Our Mission
+              </h2>
+              <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
+                To deliver high-caliber, holistic secondary education that empowers talented youth through academic mastery, technological literacy, personal responsibility, and leadership development.
+              </p>
+            </div>
 
-                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
-                  Looking ahead, our vision is to stand as a premier educational beacon in Ethiopia and beyond, producing ethical, innovative leaders capable of solving complex global challenges.
-                </p>
-              </div>
-
-              {/* Classroom Photo */}
-              <div className="relative rounded-2xl overflow-hidden border border-amber-400/30 shadow-2xl group">
-                <img 
-                  src="/about-classroom.jpg" 
-                  alt="Classroom learning at Dodola Ifa Boru" 
-                  className="w-full h-60 sm:h-80 object-cover transform group-hover:scale-105 transition duration-500"
-                />
-              </div>
-
+            {/* Vision Section */}
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+                Our Vision
+              </h2>
+              <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
+                To stand as a premier educational beacon in Ethiopia and beyond, producing ethical, innovative leaders capable of solving complex global challenges.
+              </p>
             </div>
 
           </div>
