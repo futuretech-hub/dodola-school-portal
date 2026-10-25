@@ -26,7 +26,7 @@ export default function AboutPage() {
           {/* Hero Text Content */}
           <div className="relative z-20 max-w-5xl mx-auto space-y-3">
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-wide leading-tight text-white uppercase font-serif drop-shadow-lg">
-              About Our School
+              Dodola Ifa Boru Special Boarding School
             </h1>
 
             <div className="flex items-center justify-center space-x-3 pt-1">
@@ -55,7 +55,7 @@ export default function AboutPage() {
               {/* Our Story Text */}
               <div className="space-y-4">
                 <h2 className="text-2xl sm:text-3xl font-bold text-amber-300 font-serif tracking-wide">
-                  Our Story
+                  Story
                 </h2>
                 <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
                   Dodola Ifa Boru Special Boarding School was established to provide an exceptional residential learning experience for high-achieving Grade 9 to 12 students.
