@@ -13,14 +13,14 @@ export default function AboutPage() {
       {/* Main Page Content */}
       <main className="flex-grow flex flex-col justify-between">
         
-        {/* 1. HERO BANNER SECTION (Clearer Red-Roof Building Image) */}
+        {/* 1. HERO BANNER SECTION (Clear Red-Roof Building Image) */}
         <section className="relative py-16 sm:py-24 px-4 text-center overflow-hidden border-b border-amber-400/30">
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center z-0 scale-105 transform transition-transform duration-1000"
             style={{ backgroundImage: `url('/about-hero.jpg')` }}
           />
-          {/* Light Overlay so the background image is clearer */}
+          {/* Light Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-emerald-950/30 z-10" />
 
           {/* Hero Text Content */}
@@ -45,81 +45,40 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 2. LOWER BODY SECTION (Distinct Dark Gradient Background) */}
+        {/* 2. LOWER BODY SECTION (Unified Paragraph Narrative + Classroom Image) */}
         <section className="relative z-20 bg-gradient-to-b from-slate-950 via-emerald-950/80 to-slate-950 py-12 px-4 flex-grow">
-          <div className="max-w-5xl mx-auto space-y-12">
+          <div className="max-w-5xl mx-auto">
             
-            {/* OUR STORY (LEFT) & CLASSROOM PHOTO (RIGHT) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               
-              {/* Our Story Text */}
+              {/* Story, Mission & Vision Narrative Paragraphs */}
               <div className="space-y-4">
                 <h2 className="text-2xl sm:text-3xl font-bold text-amber-300 font-serif tracking-wide">
-                  Story
+                  Our Story, Mission &amp; Vision
                 </h2>
+                
                 <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
-                  Dodola Ifa Boru Special Boarding School was established to provide an exceptional residential learning experience for high-achieving Grade 9 to 12 students.
+                  Dodola Ifa Boru Special Boarding School was established to provide an exceptional residential learning experience for high-achieving Grade 9 to 12 students. By merging rigorous academic preparation with a structured boarding environment, we cultivate discipline, curiosity, and mutual respect among scholars from diverse backgrounds.
                 </p>
+
                 <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
-                  By merging rigorous academic preparation with a structured boarding environment, we cultivate discipline, curiosity, and mutual respect among students from diverse backgrounds.
+                  Our mission is to deliver high-caliber, holistic secondary education that empowers talented youth through academic mastery, technological literacy, personal responsibility, and leadership development.
+                </p>
+
+                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
+                  Looking ahead, our vision is to stand as a premier educational beacon in Ethiopia and beyond, producing ethical, innovative leaders capable of solving complex global challenges.
                 </p>
               </div>
 
-              {/* Classroom Photo (Clean without text) */}
+              {/* Classroom Photo */}
               <div className="relative rounded-2xl overflow-hidden border border-amber-400/30 shadow-2xl group">
                 <img 
                   src="/about-classroom.jpg" 
                   alt="Classroom learning at Dodola Ifa Boru" 
-                  className="w-full h-60 sm:h-72 object-cover transform group-hover:scale-105 transition duration-500"
+                  className="w-full h-60 sm:h-80 object-cover transform group-hover:scale-105 transition duration-500"
                 />
               </div>
-            </div>
 
-            {/* MISSION & VISION (Vertically Aligned - Stacked One Above the Other) */}
-            <div className="space-y-6 pt-2 max-w-3xl mx-auto">
-              
-              {/* Mission */}
-              <div className="space-y-2 border-l-2 border-amber-400/60 pl-5 py-1">
-                <div className="flex items-center gap-2 text-amber-300 text-lg sm:text-xl font-bold font-serif">
-                  <span>🎯</span> Our Mission
-                </div>
-                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed">
-                  To deliver high-caliber, holistic secondary education that empowers talented youth through academic mastery, technological literacy, personal responsibility, and leadership development.
-                </p>
-              </div>
-
-              {/* Vision */}
-              <div className="space-y-2 border-l-2 border-amber-400/60 pl-5 py-1">
-                <div className="flex items-center gap-2 text-amber-300 text-lg sm:text-xl font-bold font-serif">
-                  <span>🔭</span> Our Vision
-                </div>
-                <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed">
-                  To stand as a premier educational beacon in Ethiopia and beyond, producing ethical, innovative leaders capable of solving complex global challenges.
-                </p>
-              </div>
-
-            </div>
-
-            {/* Custom Flourish Divider Line Matching Image Reference */}
-            <div className="pt-6 flex items-center justify-center space-x-2 text-amber-400/80">
-              <div className="h-px w-24 sm:w-48 bg-gradient-to-r from-transparent to-amber-400/80"></div>
-              
-              {/* Center Ornament Accent */}
-              <div className="flex items-center space-x-1">
-                <svg className="w-8 h-3 text-amber-400" viewBox="0 0 40 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M0 6 C10 0, 20 12, 40 6" />
-                </svg>
-                
-                <svg className="w-5 h-5 text-amber-300 drop-shadow-[0_0_6px_rgba(251,191,36,0.8)] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0L13.8 8.2L20.5 3.5L15.8 10.2L24 12L15.8 13.8L20.5 20.5L13.8 15.8L12 24L10.2 15.8L3.5 20.5L8.2 13.8L0 12L8.2 10.2L3.5 3.5L10.2 8.2L12 0Z" />
-                </svg>
-
-                <svg className="w-8 h-3 text-amber-400" viewBox="0 0 40 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M0 6 C20 0, 30 12, 40 6" />
-                </svg>
-              </div>
-
-              <div className="h-px w-24 sm:w-48 bg-gradient-to-l from-transparent to-amber-400/80"></div>
             </div>
 
           </div>
