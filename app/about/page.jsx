@@ -45,13 +45,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* 2. LOWER BODY SECTION (Story, Mission, & Vision with Individual Headers) */}
+        {/* 2. LOWER BODY SECTION (Story, Mission, & Vision without Underlines) */}
         <section className="relative z-20 bg-gradient-to-b from-slate-950 via-emerald-950/80 to-slate-950 py-12 px-4 flex-grow">
           <div className="max-w-4xl mx-auto space-y-8">
             
             {/* Story Section */}
             <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide">
                 Our Story
               </h2>
               <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
@@ -61,7 +61,7 @@ export default function AboutPage() {
 
             {/* Mission Section */}
             <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide">
                 Our Mission
               </h2>
               <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
@@ -71,7 +71,7 @@ export default function AboutPage() {
 
             {/* Vision Section */}
             <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide border-b border-amber-400/20 pb-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-300 font-serif tracking-wide">
                 Our Vision
               </h2>
               <p className="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed font-normal drop-shadow-md">
