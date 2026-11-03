@@ -1,0 +1,12 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/about/page": "app/about/page.js",
+  "/academics/page": "app/academics/page.js",
+  "/achievements/page": "app/achievements/page.js",
+  "/campus-life/page": "app/campus-life/page.js",
+  "/dashboard/security/scanner/page": "app/dashboard/security/scanner/page.js",
+  "/dashboard/student/page": "app/dashboard/student/page.js",
+  "/dashboard/warden/page": "app/dashboard/warden/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js"
+}
