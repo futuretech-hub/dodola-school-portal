@@ -15,7 +15,7 @@ export default function LoginPage() {
     setLoading(true);
     setErrorMsg('');
 
-    // 1. Sign in with Supabase Auth
+    // 1. Authenticate with Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -27,15 +27,21 @@ export default function LoginPage() {
       return;
     }
 
-    // 2. Fetch user role from public.profiles table
+    // 2. Fetch the user's role from public.profiles table
     const { data: profileData, error: profileError } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', authData.user.id)
-      .single();
+      .maybeSingle();
 
-    if (profileError || !profileData) {
-      setErrorMsg('User profile not found. Please contact admin.');
+    if (profileError) {
+      setErrorMsg(`Database error: ${profileError.message}`);
+      setLoading(false);
+      return;
+    }
+
+    if (!profileData) {
+      setErrorMsg('User profile not found in database. Please contact the administrator.');
       setLoading(false);
       return;
     }
