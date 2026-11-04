@@ -1,3 +1,4 @@
+'use client';
 const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
