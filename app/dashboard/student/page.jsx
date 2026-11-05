@@ -1,107 +1,88 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../../lib/supabaseClient';
+import React, { useState } from 'react';
 
 export default function StudentDashboard() {
-  const [student, setStudent] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    fetchStudentData();
-  }, []);
-
-  async function fetchStudentData() {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        window.location.href = '/login';
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from('students')
-        .select(`
-          *,
-          profiles:id (full_name, role)
-        `)
-        .eq('id', user.id)
-        .single();
-
-      if (!error && data) {
-        setStudent(data);
-      }
-    } catch (err) {
-      console.error('Error fetching student:', err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    window.location.href = '/login';
+  // Realistic Sample Student Data
+  const student = {
+    name: 'Samuel Alemu',
+    grade: 'Grade 11',
+    section: 'Section A',
+    studentId: 'STU2026-089',
+    academicYear: '2026 – 2027',
+    avatar: 'SA',
+    overallGpa: '91.5%',
+    attendanceRate: 96,
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-blue-400 font-medium">
-        Loading Student Portal...
-      </div>
-    );
-  }
-
-  const studentName = student?.profiles?.full_name || 'Samuel Alemu';
-  const studentIdCode = student?.student_id_code || 'STU20240123';
-  const gradeLevel = student?.grade_level || 'Grade 11';
-  const stream = student?.stream || 'Section A';
-  const dormBlock = student?.dorm_block || 'Block B-203';
-
-  const menuItems = [
-    { id: 'overview', label: 'Dashboard', icon: '🏠' },
-    { id: 'profile', label: 'My Profile', icon: '👤' },
-    { id: 'attendance', label: 'Attendance', icon: '✅' },
-    { id: 'grades', label: 'My Grades', icon: '🏆' },
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: '🏠' },
     { id: 'timetable', label: 'Timetable', icon: '📅' },
-    { id: 'assignments', label: 'Assignments', icon: '📋' },
-    { id: 'announcements', label: 'Announcements', icon: '📢' },
-    { id: 'events', label: 'School Events', icon: '🗓️' },
-    { id: 'leave', label: 'Leave Requests', icon: '✈️' },
-    { id: 'pass', label: 'Leave Pass', icon: '🎫' },
-    { id: 'resources', label: 'Learning Resources', icon: '📚' },
-    { id: 'messages', label: 'Messages', icon: '✉️', badge: 3 },
+    { id: 'subjects', label: 'Subjects', icon: '📚' },
+    { id: 'assignments', label: 'Assignments', icon: '📝', badge: 3 },
+    { id: 'grades', label: 'Grades', icon: '📊' },
+    { id: 'attendance', label: 'Attendance', icon: '✅' },
+    { id: 'announcements', label: 'Announcements', icon: '📢', badge: 2 },
+    { id: 'leave', label: 'Leave & Passes', icon: '🚪' },
+    { id: 'messages', label: 'Messages', icon: '💬' },
+    { id: 'events', label: 'School Events', icon: '🏫' },
+    { id: 'profile', label: 'My Profile', icon: '👤' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ];
 
+  const todayClasses = [
+    { time: '08:00 — 09:30', subject: 'Mathematics', teacher: 'Mr. Abebe K.', room: 'Room 3', isCurrent: false },
+    { time: '09:45 — 11:15', subject: 'Physics', teacher: 'Ms. Bethlehem T.', room: 'Physics Lab 2', isCurrent: true },
+    { time: '11:30 — 13:00', subject: 'English Language', teacher: 'Mr. David M.', room: 'Room 5', isCurrent: false },
+    { time: '14:00 — 15:30', subject: 'Chemistry', teacher: 'Dr. Solomon G.', room: 'Chemistry Lab', isCurrent: false },
+  ];
+
+  const assignments = [
+    { title: 'Electromagnetism Lab Report', subject: 'Physics', teacher: 'Ms. Bethlehem T.', due: 'Today, 23:59', status: 'Due Soon', statusColor: 'bg-amber-100 text-amber-800 border-amber-200' },
+    { title: 'Quadratic Functions Problem Set', subject: 'Mathematics', teacher: 'Mr. Abebe K.', due: 'Nov 8, 2026', status: 'Pending', statusColor: 'bg-blue-100 text-blue-800 border-blue-200' },
+    { title: 'Persuasive Essay Draft', subject: 'English', teacher: 'Mr. David M.', due: 'Nov 12, 2026', status: 'Submitted', statusColor: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
+  ];
+
+  const announcements = [
+    { title: 'Mid-Term Examination Schedule Released', date: 'Nov 4, 2026', type: 'Exam Info', important: true, text: 'Exams will commence on Nov 18. Please check the portal schedule.' },
+    { title: 'Weekend Boarding Leave Policy Reminder', date: 'Nov 2, 2026', type: 'Dormitory Notice', important: false, text: 'All leave requests for the upcoming weekend must be logged by Thursday 17:00.' },
+  ];
+
+  const leavePasses = [
+    { type: 'Weekend Home Leave', date: 'Nov 14 — Nov 16', status: 'Approved', statusBg: 'bg-emerald-50 text-emerald-700 border-emerald-200', passCode: 'PASS-8921' },
+    { type: 'Town Medical Exit', date: 'Nov 09, 2026', status: 'Pending Approval', statusBg: 'bg-amber-50 text-amber-700 border-amber-200', passCode: 'Req #402' },
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-950 flex font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col md:flex-row">
       
-      {/* 1. LEFT SIDEBAR (Dark Blue Theme) */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#0a1931] text-white flex flex-col justify-between p-5 transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div>
-          {/* Logo & School Name */}
-          <div className="flex items-center space-x-3 mb-8 px-2">
-            <div className="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center shadow-lg text-slate-950 font-black text-lg">
-              🛡️
+      {/* 1. DESKTOP SIDEBAR */}
+      <aside className="hidden md:flex flex-col w-64 bg-slate-900 text-slate-200 border-r border-slate-800 sticky top-0 h-screen p-4 justify-between">
+        <div className="space-y-6">
+          {/* School Brand Header */}
+          <div className="flex items-center space-x-3 px-2 py-1">
+            <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center text-lg shadow-md">
+              🏫
             </div>
-            <div>
-              <h2 className="text-xs font-black tracking-tight text-white uppercase">Dodola Ifa Boru</h2>
-              <p className="text-[10px] text-amber-400 font-bold">Secondary School</p>
+            <div className="min-w-0">
+              <h1 className="text-xs font-bold uppercase tracking-wider text-slate-400">Boarding Portal</h1>
+              <p className="text-sm font-black text-white truncate">Dodola Ifa Boru</p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-200px)] pr-1 custom-scrollbar">
-            {menuItems.map((item) => (
+          <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-180px)] pr-1">
+            {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => { setActiveTab(item.id); setSidebarOpen(false); }}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   activeTab === item.id
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-emerald-600 text-white shadow-sm font-bold'
+                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'
                 }`}
               >
                 <div className="flex items-center space-x-3">
@@ -109,7 +90,7 @@ export default function StudentDashboard() {
                   <span>{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black">
+                  <span className="bg-emerald-500 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">
                     {item.badge}
                   </span>
                 )}
@@ -118,343 +99,373 @@ export default function StudentDashboard() {
           </nav>
         </div>
 
-        {/* Sidebar Footer / Logout */}
-        <div className="pt-4 border-t border-white/10">
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/10 transition"
-          >
-            <span className="text-base">🚪</span>
-            <span>Logout</span>
-          </button>
-          <div className="text-[10px] text-slate-400 text-center mt-3 font-semibold tracking-wider">
-            Learn &bull; Excel &bull; Lead
+        {/* User Info Sidebar Bottom */}
+        <div className="pt-4 border-t border-slate-800 flex items-center justify-between px-2">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 rounded-full bg-slate-700 text-emerald-400 font-bold flex items-center justify-center text-xs border border-slate-600">
+              {student.avatar}
+            </div>
+            <div className="text-left">
+              <p className="text-xs font-bold text-slate-200 leading-tight">{student.name}</p>
+              <p className="text-[10px] text-slate-400">{student.grade}</p>
+            </div>
           </div>
+          <button className="text-slate-400 hover:text-red-400 text-xs font-semibold">
+            🚪
+          </button>
         </div>
       </aside>
 
-      {/* 2. MAIN CONTENT WRAPPER */}
-      <div className="flex-1 flex flex-col min-w-0 md:ml-64">
-        
-        {/* TOP HEADER */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
-          <div className="flex items-center space-x-4 flex-1 max-w-xl">
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden p-2 rounded-lg bg-slate-100 text-slate-700"
+      {/* 2. MOBILE TOP NAVIGATION & DRAWER */}
+      <div className="md:hidden bg-slate-900 text-white p-4 flex items-center justify-between sticky top-0 z-50 border-b border-slate-800">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm font-bold">🏫</div>
+          <div>
+            <h1 className="text-xs font-black">Dodola Boarding School</h1>
+            <p className="text-[10px] text-slate-400">{student.name} • {student.grade}</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-2 rounded-lg bg-slate-800 text-slate-200 text-lg"
+        >
+          {mobileMenuOpen ? '✕' : '☰'}
+        </button>
+      </div>
+
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-[60px] bg-slate-900/95 backdrop-blur-md z-40 p-4 overflow-y-auto space-y-2">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold ${
+                activeTab === item.id ? 'bg-emerald-600 text-white' : 'text-slate-300 bg-slate-800/50'
+              }`}
             >
-              ☰
+              <div className="flex items-center space-x-3">
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </div>
+              {item.badge && <span className="bg-emerald-500 text-slate-950 text-xs px-2 py-0.5 rounded-full font-bold">{item.badge}</span>}
             </button>
-            <div className="relative w-full">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
-              <input 
-                type="text" 
-                placeholder="Search..." 
-                className="w-full bg-slate-100 border border-slate-200 rounded-full pl-10 pr-4 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-500 transition"
-              />
-            </div>
+          ))}
+        </div>
+      )}
+
+      {/* 3. MAIN CONTENT AREA */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        
+        {/* TOP DESKTOP HEADER */}
+        <header className="hidden md:flex bg-white border-b border-slate-200 px-8 py-4 items-center justify-between sticky top-0 z-30 shadow-xs">
+          <div>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Academic Portal</span>
+            <h2 className="text-lg font-black text-slate-900">Student Overview</h2>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <button className="relative p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
-              🔔
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-
-            <div className="flex items-center space-x-2 border-l pl-4 border-slate-200">
-              <select className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
-                <option>2026 – 2027 Academic Year</option>
-                <option>2025 – 2026 Academic Year</option>
-              </select>
+          <div className="flex items-center space-x-6">
+            <div className="text-right border-r pr-6 border-slate-200">
+              <span className="text-xs font-bold text-slate-600 block">{student.academicYear}</span>
+              <span className="text-[10px] font-semibold text-slate-400">ID: {student.studentId}</span>
             </div>
 
-            <div className="flex items-center space-x-3 pl-2">
-              <div className="w-9 h-9 rounded-full bg-blue-600 text-white font-black flex items-center justify-center text-xs shadow">
-                {studentName.charAt(0)}
+            <button className="relative p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+              🔔
+              <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
+            </button>
+
+            <div className="flex items-center space-x-3">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 font-black flex items-center justify-center text-xs border border-emerald-200">
+                {student.avatar}
               </div>
-              <div className="hidden sm:block text-left">
-                <p className="text-xs font-bold text-slate-900 leading-tight">{studentName}</p>
-                <p className="text-[10px] text-slate-500">Student Portal</p>
+              <div className="text-left">
+                <p className="text-xs font-extrabold text-slate-900">{student.name}</p>
+                <p className="text-[10px] text-slate-500">{student.grade} &bull; {student.section}</p>
               </div>
             </div>
           </div>
         </header>
 
-        {/* DASHBOARD CONTENT BODY */}
-        <main className="flex-1 p-6 space-y-6 max-w-7xl mx-auto w-full">
-          {activeTab === 'overview' && (
-            <>
-              {/* HERO BANNER CARD */}
-              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 shadow-xl flex flex-col justify-between min-h-[220px]">
-                <div className="absolute inset-0 opacity-25 bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop')` }}></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-900/80 to-transparent"></div>
-                
-                <div className="relative z-10 space-y-2">
-                  <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
-                    Good morning, <span className="text-amber-400">{studentName}!</span>
-                  </h1>
-                  <p className="text-xs sm:text-sm text-slate-200 max-w-xl">
-                    Welcome to Dodola Ifa Boru Secondary School Student Portal. Manage your academics, attendance, and exeats seamlessly.
-                  </p>
-                </div>
+        {/* DASHBOARD BODY */}
+        <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
+          
+          {/* WELCOME BANNER & QUICK ACTIONS */}
+          <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center space-x-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-500/30">
+                <span>🏫 Dodola Ifa Boru Boarding School</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+                Good morning, {student.name.split(' ')[0]} 👋
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-300 font-medium">
+                {student.grade} &bull; {student.section} &bull; Student ID: {student.studentId}
+              </p>
+            </div>
 
-                <div className="relative z-10 flex flex-wrap gap-3 mt-6 pt-4 border-t border-white/15">
-                  <div className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
-                    <span>🎓</span>
-                    <span>{gradeLevel}</span>
-                  </div>
-                  <div className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
-                    <span>👥</span>
-                    <span>{stream}</span>
-                  </div>
-                  <div className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
-                    <span>🆔</span>
-                    <span>Student ID: {studentIdCode}</span>
-                  </div>
+            {/* Quick Action Buttons */}
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5">
+              {[
+                { label: 'View Timetable', icon: '📅' },
+                { label: 'Submit Assignment', icon: '📝' },
+                { label: 'Request Leave', icon: '🚪' },
+                { label: 'View Grades', icon: '📊' },
+              ].map((btn, idx) => (
+                <button
+                  key={idx}
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl border border-white/15 backdrop-blur-md transition flex items-center justify-center space-x-2"
+                >
+                  <span>{btn.icon}</span>
+                  <span>{btn.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 4 OVERVIEW METRIC CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider">Today's Classes</span>
+                <span className="text-lg">📚</span>
+              </div>
+              <div className="my-3">
+                <div className="text-2xl font-black text-slate-900">4 Classes</div>
+                <p className="text-xs text-emerald-600 font-semibold mt-1">Next: Physics Lab (09:45)</p>
+              </div>
+              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-emerald-500 h-full w-[50%]"></div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider">Attendance Rate</span>
+                <span className="text-lg">✅</span>
+              </div>
+              <div className="my-3">
+                <div className="text-2xl font-black text-slate-900">{student.attendanceRate}%</div>
+                <p className="text-xs text-slate-500 font-medium mt-1">175 Present / 6 Absent</p>
+              </div>
+              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-emerald-500 h-full w-[96%]"></div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider">Assignments Due</span>
+                <span className="text-lg">📝</span>
+              </div>
+              <div className="my-3">
+                <div className="text-2xl font-black text-slate-900">2 Pending</div>
+                <p className="text-xs text-amber-600 font-semibold mt-1">Physics Lab Report Due Today</p>
+              </div>
+              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-amber-500 h-full w-[65%]"></div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider">Academic Average</span>
+                <span className="text-lg">🏆</span>
+              </div>
+              <div className="my-3">
+                <div className="text-2xl font-black text-slate-900">{student.overallGpa}</div>
+                <p className="text-xs text-emerald-600 font-semibold mt-1">Top 5% in Grade 11</p>
+              </div>
+              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="bg-blue-600 h-full w-[91%]"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* MAIN GRID CONTENT: TIMETABLE & ANNOUNCEMENTS */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* TODAY'S TIMETABLE (2 Columns on Large Screens) */}
+            <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Today's Timetable</h3>
+                  <p className="text-xs text-slate-500">Thursday, Semester 1 Schedule</p>
                 </div>
+                <button className="text-xs font-bold text-emerald-600 hover:underline">Full Schedule &rarr;</button>
               </div>
 
-              {/* QUICK METRICS GRID */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-400 uppercase">Attendance</span>
-                    <span className="p-2 bg-emerald-50 text-emerald-600 rounded-2xl text-lg">✅</span>
-                  </div>
-                  <div className="my-4">
-                    <div className="text-2xl font-black text-slate-900">95%</div>
-                    <div className="text-[11px] text-emerald-600 font-bold mt-1">&uarr; 2% from last month</div>
-                  </div>
-                  <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-emerald-500 h-full w-[95%]"></div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-400 uppercase">Overall Average</span>
-                    <span className="p-2 bg-blue-50 text-blue-600 rounded-2xl text-lg">🏆</span>
-                  </div>
-                  <div className="my-4">
-                    <div className="text-2xl font-black text-slate-900">92.5%</div>
-                    <div className="text-[11px] text-blue-600 font-bold mt-1">Excellent Standing</div>
-                  </div>
-                  <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-blue-600 h-full w-[92.5%]"></div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-400 uppercase">Pending Assignments</span>
-                    <span className="p-2 bg-amber-50 text-amber-600 rounded-2xl text-lg">📋</span>
-                  </div>
-                  <div className="my-4">
-                    <div className="text-2xl font-black text-slate-900">2</div>
-                    <div className="text-[11px] text-amber-600 font-bold mt-1 cursor-pointer hover:underline">View all &rarr;</div>
-                  </div>
-                  <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-amber-500 h-full w-[40%]"></div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-400 uppercase">Today's Classes</span>
-                    <span className="p-2 bg-purple-50 text-purple-600 rounded-2xl text-lg">📅</span>
-                  </div>
-                  <div className="my-4">
-                    <div className="text-2xl font-black text-slate-900">3</div>
-                    <div className="text-[11px] text-purple-600 font-bold mt-1 cursor-pointer hover:underline">View timetable &rarr;</div>
-                  </div>
-                  <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-purple-600 h-full w-[75%]"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* TIMETABLE & ANNOUNCEMENTS ROW */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                {/* Today's Timetable */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Today's Timetable</h3>
-                    <button className="text-xs font-bold text-blue-600 hover:underline">View Full &rarr;</button>
-                  </div>
-                  <div className="divide-y divide-slate-100">
-                    {[
-                      { time: '08:00 – 09:40', subject: 'Mathematics', room: 'Rm 101' },
-                      { time: '10:00 – 11:40', subject: 'Physics', room: 'Rm 103' },
-                      { time: '13:00 – 14:40', subject: 'Chemistry', room: 'Rm 105' },
-                    ].map((slot, idx) => (
-                      <div key={idx} className="py-3 flex items-center justify-between text-xs">
-                        <span className="font-semibold text-slate-500">{slot.time}</span>
-                        <span className="font-bold text-slate-900">{slot.subject}</span>
-                        <span className="bg-slate-100 px-2.5 py-1 rounded-lg text-slate-600 font-medium">{slot.room}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Recent Announcements */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Recent Announcements</h3>
-                    <button className="text-xs font-bold text-blue-600 hover:underline">View All &rarr;</button>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { title: 'School Cleanliness Campaign', desc: "Let's keep our school clean and green.", date: 'Nov 1, 2026', color: 'bg-blue-500' },
-                      { title: 'Midterm Exam Schedule', desc: 'Exams will be held from Nov 10–14, 2026.', date: 'Oct 28, 2026', color: 'bg-emerald-500' },
-                      { title: 'Dormitory Rules Update', desc: 'New rules for the boarding house residents.', date: 'Oct 25, 2026', color: 'bg-amber-500' },
-                    ].map((ann, idx) => (
-                      <div key={idx} className="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
-                        <span className={`w-2 h-2 mt-1.5 rounded-full ${ann.color} flex-shrink-0`}></span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <h4 className="text-xs font-bold text-slate-900 truncate">{ann.title}</h4>
-                            <span className="text-[10px] text-slate-400 font-medium">{ann.date}</span>
-                          </div>
-                          <p className="text-[11px] text-slate-600 truncate mt-0.5">{ann.desc}</p>
+              <div className="space-y-3">
+                {todayClasses.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2 ${
+                      item.isCurrent
+                        ? 'bg-emerald-50/80 border-emerald-300 ring-1 ring-emerald-400/50'
+                        : 'bg-slate-50/50 border-slate-200/80'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-2 h-10 rounded-full ${item.isCurrent ? 'bg-emerald-500' : 'bg-slate-300'}`}></div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <h4 className="text-sm font-extrabold text-slate-900">{item.subject}</h4>
+                          {item.isCurrent && (
+                            <span className="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+                              Current Class
+                            </span>
+                          )}
                         </div>
+                        <p className="text-xs text-slate-500">{item.teacher}</p>
                       </div>
-                    ))}
+                    </div>
+
+                    <div className="flex items-center justify-between sm:justify-end space-x-4 text-xs font-semibold text-slate-600">
+                      <span className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">{item.room}</span>
+                      <span>{item.time}</span>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* BOARDING LEAVE & PASSES (1 Column) */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Leave & Pass Status</h3>
+                    <p className="text-xs text-slate-500">Boarding House Authorizations</p>
+                  </div>
+                  <span className="text-xl">🚪</span>
                 </div>
 
-              </div>
-
-              {/* UPCOMING ASSIGNMENTS & ACADEMIC PERFORMANCE */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                {/* Upcoming Assignments */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Upcoming Assignments</h3>
-                    <button className="text-xs font-bold text-blue-600 hover:underline">View All &rarr;</button>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { title: 'Physics Lab Report', sub: 'Physics', due: 'Nov 6' },
-                      { title: 'Essay: Climate Change', sub: 'English', due: 'Nov 8' },
-                      { title: 'Math Problem Set #5', sub: 'Mathematics', due: 'Nov 10' },
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-3 rounded-2xl border border-slate-100 bg-slate-50/50">
-                        <div className="flex items-center space-x-3">
-                          <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-                          <div>
-                            <h4 className="text-xs font-bold text-slate-900">{item.title}</h4>
-                            <p className="text-[10px] text-slate-500">{item.sub}</p>
-                          </div>
-                        </div>
-                        <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-xl border border-red-100">
-                          Due {item.due}
+                <div className="space-y-3">
+                  {leavePasses.map((pass, idx) => (
+                    <div key={idx} className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/60 space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-bold text-slate-900">{pass.type}</span>
+                        <span className={`px-2 py-0.5 rounded-full font-bold border text-[10px] ${pass.statusBg}`}>
+                          {pass.status}
                         </span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Academic Performance Chart */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Academic Performance</h3>
-                    <button className="text-xs font-bold text-blue-600 hover:underline">View Details &rarr;</button>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 px-4">
-                    <div className="space-y-2 text-center">
-                      <div className="h-28 w-10 bg-blue-600 rounded-t-xl mx-auto flex items-end justify-center pb-2 text-white text-[10px] font-bold">94%</div>
-                      <span className="text-xs font-bold text-slate-700">Math</span>
-                    </div>
-                    <div className="space-y-2 text-center">
-                      <div className="h-24 w-10 bg-emerald-500 rounded-t-xl mx-auto flex items-end justify-center pb-2 text-white text-[10px] font-bold">91%</div>
-                      <span className="text-xs font-bold text-slate-700">Physics</span>
-                    </div>
-                    <div className="space-y-2 text-center">
-                      <div className="h-26 w-10 bg-blue-500 rounded-t-xl mx-auto flex items-end justify-center pb-2 text-white text-[10px] font-bold">93%</div>
-                      <span className="text-xs font-bold text-slate-700">Chemistry</span>
-                    </div>
-                    <div className="space-y-2 text-center">
-                      <div className="h-20 w-10 bg-amber-500 rounded-t-xl mx-auto flex items-end justify-center pb-2 text-white text-[10px] font-bold">88%</div>
-                      <span className="text-xs font-bold text-slate-700">English</span>
-                    </div>
-                    <div className="border-l pl-6 border-slate-200 text-center">
-                      <p className="text-[10px] uppercase font-bold text-slate-400">Overall</p>
-                      <p className="text-2xl font-black text-blue-600 mt-1">91.5%</p>
-                      <span className="text-lg">⭐</span>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* ATTENDANCE, SCHOOL EVENTS & DORMITORY INFO */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                {/* Attendance Overview */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Attendance Overview</h3>
-                  <div className="flex items-center justify-between py-2">
-                    <div className="text-3xl font-black text-blue-600">95%</div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-emerald-500"></span><span className="text-slate-600">Present: 175</span></div>
-                      <div className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-red-500"></span><span className="text-slate-600">Absent: 6</span></div>
-                      <div className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span><span className="text-slate-600">Late: 4</span></div>
-                    </div>
-                  </div>
-                  <p className="text-[11px] text-slate-400 font-medium">Total: 185 Classes Recorded</p>
-                </div>
-
-                {/* School Events */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">School Events</h3>
-                    <button className="text-xs font-bold text-blue-600 hover:underline">View All &rarr;</button>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { title: 'Science Fair', date: 'Nov 15, 2026' },
-                      { title: 'Sports Day', date: 'Nov 20, 2026' },
-                      { title: 'Parent-Teacher Meeting', date: 'Nov 28, 2026' },
-                    ].map((ev, idx) => (
-                      <div key={idx} className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 last:border-0">
-                        <span className="font-bold text-slate-800">{ev.title}</span>
-                        <span className="text-slate-500 font-medium">{ev.date}</span>
+                      <div className="flex items-center justify-between text-[11px] text-slate-500">
+                        <span>{pass.date}</span>
+                        <span className="font-mono text-slate-400">{pass.passCode}</span>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                {/* Dormitory Info */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
-                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Dormitory Info</h3>
-                  <div className="rounded-2xl overflow-hidden h-24 bg-cover bg-center relative" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=400&auto=format&fit=crop')` }}>
-                    <div className="absolute inset-0 bg-black/40 flex items-end p-3">
-                      <span className="text-white text-xs font-bold">Youa Ifa's Dorm B</span>
+              <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition shadow-sm mt-4">
+                + Request New Exit Pass
+              </button>
+            </div>
+          </div>
+
+          {/* SECONDARY GRID CONTENT: ASSIGNMENTS & ANNOUNCEMENTS */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            {/* ASSIGNMENTS SECTION */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Pending Assignments</h3>
+                  <p className="text-xs text-slate-500">Grade 11 Coursework</p>
+                </div>
+                <button className="text-xs font-bold text-emerald-600 hover:underline">View All &rarr;</button>
+              </div>
+
+              <div className="space-y-3">
+                {assignments.map((item, idx) => (
+                  <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <h4 className="text-xs font-bold text-slate-900">{item.title}</h4>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${item.statusColor}`}>
+                          {item.status}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500">{item.subject} &bull; {item.teacher}</p>
+                      <p className="text-[11px] text-slate-400 font-medium">Due: {item.due}</p>
+                    </div>
+
+                    <button className="self-start sm:self-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow-2xs">
+                      Submit Work
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ANNOUNCEMENTS SECTION */}
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Boarding & School Notices</h3>
+                  <p className="text-xs text-slate-500">Official Bulletin</p>
+                </div>
+                <button className="text-xs font-bold text-emerald-600 hover:underline">Archive &rarr;</button>
+              </div>
+
+              <div className="space-y-3">
+                {announcements.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-xl border space-y-2 ${
+                      item.important
+                        ? 'bg-amber-50/40 border-amber-200/80'
+                        : 'bg-slate-50/50 border-slate-100'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        {item.important && <span className="text-amber-600 text-xs font-bold">⚠️</span>}
+                        <span className="text-xs font-extrabold text-slate-900">{item.title}</span>
+                      </div>
+                      <span className="text-[10px] font-semibold text-slate-400">{item.date}</span>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.text}</p>
+                    <div className="inline-block bg-slate-200/60 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded">
+                      {item.type}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Room Number</span>
-                    <span className="font-bold text-slate-900">{dormBlock}</span>
-                  </div>
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md shadow-blue-600/20">
-                    View Details &rarr;
-                  </button>
-                </div>
-
+                ))}
               </div>
-            </>
-          )}
-
-          {/* Fallback views for other tabs */}
-          {activeTab !== 'overview' && (
-            <div className="bg-white rounded-3xl p-12 text-center space-y-4 shadow-sm border border-slate-200">
-              <div className="text-5xl">📂</div>
-              <h2 className="text-xl font-black text-slate-900 capitalize">{activeTab} Section</h2>
-              <p className="text-xs text-slate-500">This module for Dodola Ifa Boru Special Boarding School is currently synced and ready.</p>
             </div>
-          )}
+
+          </div>
+
+          {/* ACADEMIC PROGRESS SUMMARY BAR */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">Subject Performance Overview</h3>
+                <p className="text-xs text-slate-500">Continuous Assessment Progress</p>
+              </div>
+              <button className="text-xs font-bold text-emerald-600 hover:underline">Detailed Report &rarr;</button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+              {[
+                { subject: 'Mathematics', score: '94%', progress: 'w-[94%]', color: 'bg-emerald-500' },
+                { subject: 'Physics', score: '91%', progress: 'w-[91%]', color: 'bg-blue-600' },
+                { subject: 'Chemistry', score: '93%', progress: 'w-[93%]', color: 'bg-teal-500' },
+                { subject: 'English', score: '88%', progress: 'w-[88%]', color: 'bg-indigo-500' },
+              ].map((sub, idx) => (
+                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-slate-700">{sub.subject}</span>
+                    <span className="font-black text-slate-900">{sub.score}</span>
+                  </div>
+                  <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div className={`${sub.color} ${sub.progress} h-full rounded-full`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </main>
       </div>
     </div>
