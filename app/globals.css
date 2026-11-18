@@ -10,11 +10,14 @@
 
 html { scroll-behavior: smooth; }
 
+html, body { min-height: 100%; }
+
 body {
   margin: 0;
   background: #f8fafc;
   color: #0f172a;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
@@ -27,3 +30,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 ::selection { background: #a7f3d0; color: #064e3b; }
 
 .public-serif { font-family: Georgia, 'Times New Roman', serif; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}

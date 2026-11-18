@@ -11,3 +11,5 @@
 - [x] Public route metadata and `public/manus-routes.json` cover all page routes.
 - [x] The repository installs and passes the production build after implementation.
 - [x] The final handoff clearly lists the Supabase actions the user must complete, including environment variables, schema, RLS policies, auth users/profiles, and storage if needed.
+- [x] The public homepage, navigation, global styling, and role-aware portal shell have been refined for clearer hierarchy, accessibility, responsive behavior, and role-specific identity.
+- [x] The Supabase schema now includes announcements, assignments, submissions, attendance records, school events, messages, and meal-service logs, with a companion RLS policy file.

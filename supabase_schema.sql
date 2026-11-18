@@ -84,3 +84,96 @@ CREATE TABLE scan_logs (
 -- INDEXES
 CREATE INDEX idx_students_qr ON students(qr_code_token);
 CREATE INDEX idx_grades_student ON student_grades(student_id);
+
+
+-- 8. PORTAL CONTENT AND OPERATIONS
+CREATE TABLE announcements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  author_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  audience_role user_role,
+  grade_level INT CHECK (grade_level BETWEEN 9 AND 12),
+  stream academic_stream,
+  published_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE assignments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  teacher_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  subject_id UUID REFERENCES subjects(id) ON DELETE SET NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  due_date TIMESTAMPTZ NOT NULL,
+  max_score NUMERIC(5,2) NOT NULL DEFAULT 100,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE assignment_submissions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  assignment_id UUID REFERENCES assignments(id) ON DELETE CASCADE NOT NULL,
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE NOT NULL,
+  submitted_at TIMESTAMPTZ,
+  file_path TEXT,
+  score NUMERIC(5,2),
+  feedback TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (assignment_id, student_id)
+);
+
+CREATE TYPE attendance_status AS ENUM ('present', 'late', 'absent', 'excused');
+CREATE TABLE attendance_records (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE NOT NULL,
+  recorded_by UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  subject_id UUID REFERENCES subjects(id) ON DELETE SET NULL,
+  attendance_date DATE NOT NULL,
+  status attendance_status NOT NULL,
+  note TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (student_id, subject_id, attendance_date)
+);
+
+CREATE TABLE school_events (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_by UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  event_type TEXT NOT NULL DEFAULT 'school',
+  starts_at TIMESTAMPTZ NOT NULL,
+  ends_at TIMESTAMPTZ,
+  location TEXT,
+  audience_role user_role,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE messages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  sender_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  recipient_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
+  subject TEXT,
+  body TEXT NOT NULL,
+  read_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE meal_service_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  recorded_by UUID REFERENCES profiles(id) ON DELETE SET NULL NOT NULL,
+  service_date DATE NOT NULL,
+  meal_type TEXT NOT NULL CHECK (meal_type IN ('breakfast', 'lunch', 'dinner')),
+  expected_count INT NOT NULL DEFAULT 0,
+  served_count INT NOT NULL DEFAULT 0,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (service_date, meal_type)
+);
+
+CREATE INDEX idx_announcements_audience ON announcements(audience_role, grade_level, published_at);
+CREATE INDEX idx_assignments_teacher ON assignments(teacher_id, due_date);
+CREATE INDEX idx_submissions_student ON assignment_submissions(student_id);
+CREATE INDEX idx_attendance_student_date ON attendance_records(student_id, attendance_date);
+CREATE INDEX idx_events_start ON school_events(starts_at);
+CREATE INDEX idx_messages_recipient ON messages(recipient_id, created_at DESC);
+CREATE INDEX idx_meal_logs_date ON meal_service_logs(service_date, meal_type);

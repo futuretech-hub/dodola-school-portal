@@ -8,6 +8,12 @@ const pillars = [
   ['Personal growth', 'Structured support helps each learner build confidence and practical independence.', 'users'],
 ];
 
+const portalSteps = [
+  ['01', 'Know the plan', 'Students see the timetable, assignments, notices, and upcoming events before the day begins.', 'calendar'],
+  ['02', 'Do the work', 'Teachers record attendance and grades while students keep coursework and progress in one place.', 'check'],
+  ['03', 'Stay connected', 'Families, wardens, and gate staff share the right information when it matters.', 'users'],
+];
+
 export default function Home() {
   return (
     <PublicPage>
@@ -26,6 +32,7 @@ export default function Home() {
           </div>
         </section>
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Built around the whole student</p><h2 className="public-serif mt-3 text-3xl text-slate-950 sm:text-4xl">Strong days create strong futures.</h2><p className="mt-4 text-sm leading-7 text-slate-600">Our academic, residential, and pastoral systems work together so students can focus on learning while families and staff stay informed.</p></div><div className="mt-10 grid gap-4 md:grid-cols-3">{pillars.map(([title, body, icon]) => <article key={title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700"><Icon name={icon} size={19} /></span><h3 className="mt-5 text-base font-black text-slate-950">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{body}</p></article>)}</div></section>
+        <section className="bg-emerald-50/70"><div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"><div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">A connected school day</p><h2 className="public-serif mt-3 text-3xl text-slate-950 sm:text-4xl">Less chasing. More clarity.</h2></div><p className="max-w-md text-sm leading-6 text-slate-600">The portal gives each member of the school community a focused view of the decisions and actions that belong to them.</p></div><div className="mt-10 grid gap-4 md:grid-cols-3">{portalSteps.map(([number, title, body, icon]) => <article key={number} className="relative rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm"><div className="flex items-center justify-between"><span className="text-3xl font-black text-emerald-100">{number}</span><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-700"><Icon name={icon} size={18} /></span></div><h3 className="mt-7 text-base font-black text-slate-950">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{body}</p></article>)}</div></div></section>
         <section className="border-y border-slate-200 bg-white"><div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">For students, families, and staff</p><h2 className="mt-2 text-2xl font-black text-slate-950">One place for the school day.</h2></div><Link href="/login" className="inline-flex items-center gap-2 self-start rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">Go to portal access <Icon name="arrow" size={16} /></Link></div></section>
       </main>
     </PublicPage>

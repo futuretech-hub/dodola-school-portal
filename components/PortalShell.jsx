@@ -33,6 +33,16 @@ const common = {
 
 const roleKey = (role) => role === 'super_admin' || role === 'admin' ? 'admin' : role;
 
+const roleIdentity = {
+  student: { name: student.name, detail: student.grade },
+  teacher: { name: 'Teaching staff', detail: 'Academic team' },
+  admin: { name: 'School administration', detail: 'Dodola campus' },
+  parent: { name: 'Family account', detail: 'Samuel Alemu · Grade 11' },
+  warden: { name: 'Boarding team', detail: 'Residence operations' },
+  security_guard: { name: 'Gate team', detail: 'Campus safety' },
+  cafeteria_staff: { name: 'Cafeteria team', detail: 'Meal operations' },
+};
+
 export default function PortalShell({ role = 'student', title, eyebrow, children }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -40,6 +50,7 @@ export default function PortalShell({ role = 'student', title, eyebrow, children
   const key = roleKey(role);
   const nav = common[key] || common.student;
   const displayRole = roleLabels[role] || roleLabels.student;
+  const identity = roleIdentity[key] || roleIdentity.student;
   const isActive = (href) => pathname === href || (href !== `/dashboard/${key}` && pathname.startsWith(`${href}/`));
 
   async function signOut() {
@@ -56,10 +67,10 @@ export default function PortalShell({ role = 'student', title, eyebrow, children
         </div>
         <div className="px-4 pt-5"><p className="px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{displayRole} workspace</p></div>
         <nav className="mt-3 flex-1 space-y-1 overflow-y-auto px-3 pb-4">
-          {nav.map(([label, href, icon]) => <Link key={href} href={href} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${isActive(href) ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}`}><Icon name={icon} size={16} /><span>{label}</span></Link>)}
+          {nav.map(([label, href, icon]) => <Link key={`${label}-${href}`} href={href} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${isActive(href) ? 'bg-emerald-700 text-white shadow-sm ring-1 ring-emerald-500/40' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}`}><Icon name={icon} size={16} /><span>{label}</span></Link>)}
         </nav>
         <div className="border-t border-slate-800 p-4">
-          <div className="flex items-center gap-3 rounded-xl bg-slate-900 px-3 py-3"><div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800">{student.initials}</div><div className="min-w-0 flex-1"><p className="truncate text-xs font-bold text-white">{key === 'student' ? student.name : displayRole}</p><p className="truncate text-[10px] text-slate-500">{key === 'student' ? student.grade : 'Dodola campus'}</p></div><button onClick={signOut} className="text-slate-500 hover:text-red-300" aria-label="Sign out"><Icon name="logout" size={16} /></button></div>
+          <div className="flex items-center gap-3 rounded-xl bg-slate-900 px-3 py-3"><div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800">{key === 'student' ? student.initials : displayRole.slice(0, 2).toUpperCase()}</div><div className="min-w-0 flex-1"><p className="truncate text-xs font-bold text-white">{identity.name}</p><p className="truncate text-[10px] text-slate-500">{identity.detail}</p></div><button onClick={signOut} className="text-slate-500 hover:text-red-300" aria-label="Sign out"><Icon name="logout" size={16} /></button></div>
         </div>
       </aside>
 
@@ -67,7 +78,7 @@ export default function PortalShell({ role = 'student', title, eyebrow, children
         <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
           <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3"><button onClick={() => setMobileOpen(!mobileOpen)} className="rounded-xl border border-slate-200 p-2 text-slate-600 lg:hidden" aria-label="Open navigation"><Icon name={mobileOpen ? 'close' : 'menu'} size={19} /></button><div><p className="text-[10px] font-bold uppercase tracking-[0.17em] text-emerald-700">{eyebrow || `${displayRole} workspace`}</p><h1 className="text-base font-black text-slate-950 sm:text-lg">{title || 'Overview'}</h1></div></div>
-            <div className="flex items-center gap-3"><span className="hidden text-right sm:block"><span className="block text-xs font-bold text-slate-700">{student.academicYear}</span><span className="block text-[10px] text-slate-400">Dodola campus</span></span><button className="relative rounded-xl border border-slate-200 bg-white p-2 text-slate-500" aria-label="Notifications"><Icon name="bell" size={17} /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" /></button><div className="hidden h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800 sm:flex">{student.initials}</div></div>
+            <div className="flex items-center gap-3"><span className="hidden text-right sm:block"><span className="block text-xs font-bold text-slate-700">{student.academicYear}</span><span className="block text-[10px] text-slate-400">{identity.detail}</span></span><button className="relative rounded-xl border border-slate-200 bg-white p-2 text-slate-500 transition hover:border-emerald-200 hover:text-emerald-700" aria-label="Notifications"><Icon name="bell" size={17} /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" /></button><div className="hidden h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800 sm:flex">{key === 'student' ? student.initials : displayRole.slice(0, 2).toUpperCase()}</div></div>
           </div>
         </header>
 
