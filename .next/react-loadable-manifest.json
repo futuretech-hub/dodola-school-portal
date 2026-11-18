@@ -1,1 +1,9 @@
-{}
+{
+  "app/dashboard/security/scanner/page.jsx -> html5-qrcode": {
+    "id": 791,
+    "files": [
+      "static/chunks/7cb1fa1f.8aa99c163dd14371.js",
+      "static/chunks/791.fbfc7d87e8fbfd4e.js"
+    ]
+  }
+}
