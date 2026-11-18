@@ -19,7 +19,7 @@ export default function LoginPage() {
 
   async function handleLogin(event) {
     event.preventDefault(); setErrorMsg('');
-    if (!isSupabaseConfigured || !supabase) { setErrorMsg('Supabase is not configured yet. Use the preview link below or add the project environment variables.'); return; }
+    if (!isSupabaseConfigured || !supabase) { setErrorMsg('This deployment is missing its Supabase environment variables. Running SQL in Supabase is not enough: add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (or NEXT_PUBLIC_SUPABASE_ANON_KEY) to the hosting environment, then redeploy.'); return; }
     setLoading(true);
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
     if (authError) { setErrorMsg(authError.message); setLoading(false); return; }

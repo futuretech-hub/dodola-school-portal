@@ -8,10 +8,14 @@ Add these values to the deployment environment and to a local `.env.local` file.
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_PUBLIC_ANON_KEY
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLIC_PUBLISHABLE_KEY
+# Older Supabase projects may use this name instead:
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_PUBLIC_ANON_KEY
 ```
 
-Only the public anon key belongs in the browser. Never expose the service-role key in this Next.js app.
+Only the public publishable/anon key belongs in the browser. Never expose the service-role key in this Next.js app. The portal accepts either `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` or the older `NEXT_PUBLIC_SUPABASE_ANON_KEY` name.
+
+Important: running SQL in Supabase does not configure the Next.js app. Add the two `NEXT_PUBLIC_...` values to the environment variables of the service that serves this repository, then trigger a new deployment. Next.js embeds public environment variables during the build, so restarting the database or refreshing the browser alone will not load newly added values.
 
 ## 2. Run the schema and policies
 
