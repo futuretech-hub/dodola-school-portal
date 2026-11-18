@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icon from './Icon';
 import { roleLabels, student } from '../lib/demoData';
-import { supabase } from '../lib/supabaseClient';
+import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 
 const common = {
   student: [
@@ -33,6 +33,8 @@ const common = {
 
 const roleKey = (role) => role === 'super_admin' || role === 'admin' ? 'admin' : role;
 
+const roleRoutes = { admin: '/dashboard/admin', teacher: '/dashboard/teacher', parent: '/dashboard/parent', warden: '/dashboard/warden', security_guard: '/dashboard/security', cafeteria_staff: '/dashboard/cafeteria', student: '/dashboard/student' };
+
 const roleIdentity = {
   student: { name: student.name, detail: student.grade },
   teacher: { name: 'Teaching staff', detail: 'Academic team' },
@@ -47,15 +49,38 @@ export default function PortalShell({ role = 'student', title, eyebrow, children
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authState, setAuthState] = useState('loading');
+  const [account, setAccount] = useState(null);
   const key = roleKey(role);
   const nav = common[key] || common.student;
   const displayRole = roleLabels[role] || roleLabels.student;
-  const identity = roleIdentity[key] || roleIdentity.student;
+  const identity = account ? { name: account.full_name, detail: account.role === 'student' ? student.grade : (roleLabels[account.role] || 'Dodola campus') } : (roleIdentity[key] || roleIdentity.student);
   const isActive = (href) => pathname === href || (href !== `/dashboard/${key}` && pathname.startsWith(`${href}/`));
+
+  useEffect(() => {
+    let active = true;
+    async function protectRoute() {
+      if (!isSupabaseConfigured || !supabase) { if (active) setAuthState('configuration'); return; }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { router.replace('/login'); return; }
+      const { data: profile, error } = await supabase.from('profiles').select('full_name, role').eq('id', user.id).maybeSingle();
+      if (error || !profile?.role) { if (active) setAuthState('profile'); return; }
+      const actualKey = roleKey(profile.role);
+      if (actualKey !== key) { router.replace(roleRoutes[actualKey] || '/login'); return; }
+      if (active) { setAccount(profile); setAuthState('ready'); }
+    }
+    protectRoute();
+    return () => { active = false; };
+  }, [key, router]);
 
   async function signOut() {
     if (supabase) await supabase.auth.signOut();
     router.push('/login');
+  }
+
+  if (authState !== 'ready') {
+    const message = authState === 'configuration' ? 'This portal deployment is not connected to Supabase yet.' : authState === 'profile' ? 'Your account does not have a valid school profile. Contact the administrator.' : 'Checking your secure school account…';
+    return <div className="flex min-h-screen items-center justify-center bg-slate-950 px-6 text-center text-white"><div className="max-w-md"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-700"><Icon name={authState === 'loading' ? 'lock' : 'info'} size={24} /></div><h1 className="mt-6 text-xl font-black">{authState === 'loading' ? 'Opening your portal' : 'Secure access required'}</h1><p className="mt-3 text-sm leading-6 text-slate-300">{message}</p>{authState !== 'loading' && <button onClick={() => router.replace('/login')} className="mt-6 rounded-xl bg-white px-4 py-3 text-xs font-bold text-emerald-950">Return to sign in</button>}</div></div>;
   }
 
   return (

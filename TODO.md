@@ -13,3 +13,4 @@
 - [x] The final handoff clearly lists the Supabase actions the user must complete, including environment variables, schema, RLS policies, auth users/profiles, and storage if needed.
 - [x] The public homepage, navigation, global styling, and role-aware portal shell have been refined for clearer hierarchy, accessibility, responsive behavior, and role-specific identity.
 - [x] The Supabase schema now includes announcements, assignments, submissions, attendance records, school events, messages, and meal-service logs, with a companion RLS policy file.
+- [x] The login page no longer exposes a preview route, and every portal shell verifies a live Supabase session and matching profile role before rendering a dashboard.

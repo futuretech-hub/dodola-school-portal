@@ -1,6 +1,6 @@
 # Supabase setup for Dodola School Portal
 
-The portal is built to run in preview mode with sample data, but live authentication and school records require a Supabase project. Complete the following steps before using the portal with real students.
+The portal now requires a connected Supabase project and a real authenticated school account. Complete the following steps before allowing students or staff to use it.
 
 ## 1. Create the project environment values
 
@@ -59,4 +59,4 @@ Run the schema, run the policies, create one administrator, create one account f
 
 ## 8. Verify before launch
 
-Test each role with a separate Auth account. Confirm that a student cannot read another student’s grades or exeats, a parent can see only their linked child, a warden can update exeat status, and a security user can log a gate action without gaining administrator access.
+Test each role with a separate Auth account. The login page has no sample-account entry, and every `/dashboard/...` route checks the Supabase session and matching `profiles.role` before rendering. Confirm that a student cannot read another student’s grades or exeats, a parent can see only their linked child, a warden can update exeat status, and a security user can log a gate action without gaining administrator access.
