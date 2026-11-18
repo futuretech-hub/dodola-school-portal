@@ -1,0 +1,4 @@
+import PortalShell from '../../../../components/PortalShell';
+import { PageIntro, SectionCard, StatusBadge } from '../../../../components/PortalUI';
+import { events } from '../../../../lib/demoData';
+export default function ParentEventsPage() { return <PortalShell role="parent" eyebrow="Family portal" title="School events"><PageIntro eyebrow="Calendar" title="Important dates for families." description="Plan ahead for school forums, student showcases, and community activities." /><div className="space-y-3">{events.map((event)=><SectionCard key={event.title}><div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-sm font-bold text-slate-900">{event.title}</p><p className="mt-1 text-xs text-slate-500">{event.date} · {event.location}</p></div><StatusBadge tone="info">{event.type}</StatusBadge></div></SectionCard>)}</div></PortalShell>; }

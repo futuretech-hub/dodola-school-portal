@@ -1,135 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { supabase } from '../../lib/supabaseClient';
+import PublicFooter from '../../components/PublicFooter';
+import Icon from '../../components/Icon';
+import { isSupabaseConfigured, supabase } from '../../lib/supabaseClient';
+
+const roleRoutes = { super_admin: '/dashboard/admin', admin: '/dashboard/admin', teacher: '/dashboard/teacher', warden: '/dashboard/warden', security_guard: '/dashboard/security', student: '/dashboard/student', parent: '/dashboard/parent', cafeteria_staff: '/dashboard/cafeteria' };
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  async function handleLogin(event) {
+    event.preventDefault(); setErrorMsg('');
+    if (!isSupabaseConfigured || !supabase) { setErrorMsg('Supabase is not configured yet. Use the preview link below or add the project environment variables.'); return; }
     setLoading(true);
-    setErrorMsg('');
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    if (authError) { setErrorMsg(authError.message); setLoading(false); return; }
+    const { data: profileData, error: profileError } = await supabase.from('profiles').select('role').eq('id', authData.user.id).maybeSingle();
+    if (profileError) { setErrorMsg(`Database error: ${profileError.message}`); setLoading(false); return; }
+    if (!profileData?.role) { setErrorMsg('User profile not found. Ask an administrator to create a profile for this account.'); setLoading(false); return; }
+    router.push(roleRoutes[profileData.role] || '/dashboard/student');
+  }
 
-    // 1. Authenticate with Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (authError) {
-      setErrorMsg(authError.message);
-      setLoading(false);
-      return;
-    }
-
-    // 2. Fetch the user's role from public.profiles table
-    const { data: profileData, error: profileError } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', authData.user.id)
-      .maybeSingle();
-
-    if (profileError) {
-      setErrorMsg(`Database error: ${profileError.message}`);
-      setLoading(false);
-      return;
-    }
-
-    if (!profileData) {
-      setErrorMsg('User profile not found in database. Please contact the administrator.');
-      setLoading(false);
-      return;
-    }
-
-    // 3. Redirect based on user role
-    const userRole = profileData.role;
-    if (userRole === 'admin') {
-      window.location.href = '/dashboard/admin';
-    } else if (userRole === 'teacher') {
-      window.location.href = '/dashboard/teacher';
-    } else if (userRole === 'student') {
-      window.location.href = '/dashboard/student';
-    } else if (userRole === 'parent') {
-      window.location.href = '/dashboard/parent';
-    } else {
-      window.location.href = '/dashboard/student';
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
-      <Navbar />
-
-      <main className="flex-grow flex items-center justify-center p-4 bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950">
-        <div className="max-w-md w-full bg-slate-900/90 border border-emerald-500/30 p-8 rounded-3xl shadow-2xl backdrop-blur-md space-y-6">
-          <div className="text-center space-y-2">
-            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl mx-auto flex items-center justify-center text-emerald-400 text-2xl font-black shadow-inner">
-              🔒
-            </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-white">Portal Access</h1>
-            <p className="text-xs text-slate-400">
-              Sign in to access your dashboard, grades, and exeat requests.
-            </p>
-          </div>
-
-          {errorMsg && (
-            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs text-red-400 text-center">
-              {errorMsg}
-            </div>
-          )}
-
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
-              <input 
-                type="email" 
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="student@dodolaschool.edu.et" 
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Password</label>
-              <input 
-                type="password" 
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••" 
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
-              />
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-sm py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 mt-2 disabled:opacity-50"
-            >
-              {loading ? 'Signing in...' : 'Sign In to Portal'}
-            </button>
-          </form>
-
-          <div className="text-center pt-2">
-            <a href="/" className="text-xs text-emerald-400 hover:underline">
-              ← Return to Home Landing Page
-            </a>
-          </div>
-        </div>
-      </main>
-
-      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-6 px-4 text-center text-xs text-slate-300">
-        <p className="font-medium">
-          &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
-        </p>
-      </footer>
-    </div>
-  );
+  return <div className="min-h-screen bg-slate-50"><Navbar /><main className="mx-auto flex max-w-7xl items-center justify-center px-4 py-16 sm:px-6 lg:px-8"><div className="grid w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm lg:grid-cols-[.9fr_1.1fr]"><div className="hidden bg-emerald-950 p-10 text-white lg:block"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-800 text-amber-300"><Icon name="lock" size={22} /></span><p className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Dodola school portal</p><h1 className="public-serif mt-4 text-4xl leading-tight">The school day, connected.</h1><p className="mt-5 text-sm leading-6 text-emerald-100">Students, families, teachers, wardens, and staff each have a clear place to see what matters and do the next thing.</p><div className="mt-10 space-y-4 text-sm text-emerald-100"><div className="flex items-center gap-3"><Icon name="check" size={17} className="text-amber-300" />Grades and attendance</div><div className="flex items-center gap-3"><Icon name="check" size={17} className="text-amber-300" />Boarding leave and gate checks</div><div className="flex items-center gap-3"><Icon name="check" size={17} className="text-amber-300" />School notices and events</div></div></div><div className="p-6 sm:p-10"><div className="mx-auto max-w-md"><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Secure access</p><h2 className="mt-3 text-2xl font-black text-slate-950">Sign in to your portal</h2><p className="mt-2 text-sm leading-6 text-slate-500">Use the email and password created by your school administrator.</p>{errorMsg&&<div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-semibold leading-5 text-red-700">{errorMsg}</div>}<form onSubmit={handleLogin} className="mt-6 space-y-4"><label className="block"><span className="mb-1.5 block text-xs font-bold text-slate-700">Email address</span><input type="email" required value={email} onChange={(event)=>setEmail(event.target.value)} placeholder="student@dodolaschool.edu.et" className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm placeholder:text-slate-400" /></label><label className="block"><span className="mb-1.5 block text-xs font-bold text-slate-700">Password</span><input type="password" required value={password} onChange={(event)=>setPassword(event.target.value)} placeholder="Enter your password" className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm placeholder:text-slate-400" /></label><button type="submit" disabled={loading} className="w-full rounded-xl bg-emerald-700 px-4 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-800 disabled:opacity-50">{loading ? 'Signing in…' : 'Sign in to portal'}</button></form><div className="mt-6 border-t border-slate-100 pt-5 text-center"><Link href="/dashboard/student" className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 hover:text-emerald-900">Preview student portal <Icon name="arrow" size={14} /></Link><p className="mt-3 text-[11px] text-slate-400">Preview uses sample data and does not create a real account.</p></div></div></div></div></main><PublicFooter /></div>;
 }

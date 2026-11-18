@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(16, 185, 129, .35);
+  outline-offset: 2px;
+}
+
+::selection { background: #a7f3d0; color: #064e3b; }
+
+.public-serif { font-family: Georgia, 'Times New Roman', serif; }

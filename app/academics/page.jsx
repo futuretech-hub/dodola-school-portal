@@ -1,46 +1,12 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
+import Link from 'next/link';
+import PublicPage from '../../components/PublicPage';
+import Icon from '../../components/Icon';
+
+const streams = [
+  { title: 'Natural sciences', text: 'Advanced Mathematics, Physics, Chemistry, Biology, Computer Science, and Technical Drawing.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-900' },
+  { title: 'Social sciences', text: 'Economics, Geography, History, English Literature, and Civics, with a focus on evidence and social responsibility.', accent: 'border-blue-200 bg-blue-50 text-blue-900' },
+];
 
 export default function AcademicsPage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-white font-sans">
-      <Navbar />
-
-      <main className="flex-grow flex items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950">
-        <div className="max-w-4xl w-full bg-slate-900/90 border border-emerald-500/30 p-6 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-md space-y-6">
-          <div>
-            <span className="inline-block bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
-              Academic Excellence
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Curriculum & Streams</h1>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-2">
-              Our specialized academic framework prepares students for top university entrances and national examinations through intensive coursework in both Natural and Social Sciences.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            <div className="p-5 rounded-2xl border border-emerald-500/30 bg-slate-950/60 space-y-2">
-              <h3 className="font-bold text-emerald-400 text-sm mb-1">Natural Sciences Stream</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">Advanced Mathematics, Physics, Chemistry, Biology, Computer Science, and Technical Drawing.</p>
-            </div>
-            <div className="p-5 rounded-2xl border border-teal-500/30 bg-slate-950/60 space-y-2">
-              <h3 className="font-bold text-teal-400 text-sm mb-1">Social Sciences Stream</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">Economics, Geography, History, English Literature, and Civics.</p>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <footer className="bg-slate-950/75 backdrop-blur-md border-t border-white/10 py-6 px-4 text-center text-xs text-slate-300 flex flex-col items-center space-y-1">
-        <p className="font-medium">
-          &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
-        </p>
-        <p className="text-[11px] text-slate-400 space-x-2">
-          <a href="#" className="hover:text-white transition">Privacy Policy</a>
-          <span>|</span>
-          <a href="#" className="hover:text-white transition">Terms of Use</a>
-        </p>
-      </footer>
-    </div>
-  );
+  return <PublicPage><main><section className="bg-slate-950 text-white"><div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"><p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Academic excellence</p><h1 className="public-serif mt-4 max-w-3xl text-4xl leading-tight sm:text-5xl">A curriculum that prepares students for what comes next.</h1><p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">Our academic framework balances strong national examination preparation with the habits of curiosity, communication, and independent study.</p></div></section><section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Curriculum and streams</p><h2 className="mt-3 text-3xl font-black text-slate-950">Focused pathways for Grades 9–12.</h2><p className="mt-4 text-sm leading-7 text-slate-600">Students receive a clear academic plan, regular feedback, and structured preparation for national examinations and university pathways.</p></div><div className="mt-10 grid gap-5 md:grid-cols-2">{streams.map((stream) => <article key={stream.title} className={`rounded-2xl border p-6 ${stream.accent}`}><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/80"><Icon name="book" size={19} /></span><h3 className="mt-5 text-xl font-black">{stream.title}</h3><p className="mt-3 text-sm leading-6 opacity-80">{stream.text}</p><p className="mt-6 text-xs font-bold uppercase tracking-[0.12em] opacity-60">Guided by subject teachers and class advisors</p></article>)}</div></section><section className="border-y border-slate-200 bg-white"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">The school day</p><h2 className="mt-2 text-2xl font-black text-slate-950">Academic habits are built into the routine.</h2></div><div className="md:col-span-2 grid gap-6 sm:grid-cols-3"><div><p className="text-sm font-bold text-slate-900">Dedicated lessons</p><p className="mt-2 text-sm leading-6 text-slate-500">Clear objectives, practical work, and regular assessment.</p></div><div><p className="text-sm font-bold text-slate-900">Study support</p><p className="mt-2 text-sm leading-6 text-slate-500">Structured evening study with staff support in residence.</p></div><div><p className="text-sm font-bold text-slate-900">Progress visibility</p><p className="mt-2 text-sm leading-6 text-slate-500">Students and families can follow grades, attendance, and notices in the portal.</p></div></div></div></section><section className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8"><p className="text-sm text-slate-600">Already part of the school community?</p><Link href="/login" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900">Open portal access <Icon name="arrow" size={16} /></Link></section></main></PublicPage>;
 }

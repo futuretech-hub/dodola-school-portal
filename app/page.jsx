@@ -1,169 +1,33 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
+import Link from 'next/link';
+import PublicPage from '../components/PublicPage';
+import Icon from '../components/Icon';
+
+const pillars = [
+  ['Academic excellence', 'Focused teaching, strong study habits, and preparation for the next step.', 'book'],
+  ['Character and values', 'A safe boarding community built on responsibility, respect, and service.', 'shield'],
+  ['Personal growth', 'Structured support helps each learner build confidence and practical independence.', 'users'],
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-950 text-white font-sans relative overflow-x-hidden">
-      
-      {/* Background Image & Overlay */}
-      <div 
-        className="fixed inset-0 bg-cover bg-center z-0 scale-105 transform transition-transform duration-1000"
-        style={{ backgroundImage: `url('/campus-hero.jpg')` }}
-      />
-      <div className="fixed inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-emerald-950/60 z-10" />
-
-      {/* Top Navbar */}
-      <div className="relative z-20">
-        <Navbar />
-      </div>
-
-      {/* Main Content (Directly on Page without Container Box) */}
-      <main className="relative z-20 max-w-5xl mx-auto text-center px-4 py-8 sm:py-12 my-auto space-y-6">
-        
-        {/* Top 8-Point Shiny Star with Lines Disappearing to Sides */}
-        <div className="flex items-center justify-center space-x-3">
-          <span className="h-px bg-gradient-to-r from-transparent via-amber-400/80 to-amber-400 w-20 sm:w-40"></span>
-          
-          <svg 
-            className="w-7 h-7 sm:w-8 sm:h-8 text-amber-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]" 
-            viewBox="0 0 24 24" 
-            fill="currentColor"
-          >
-            <path d="M12 0L13.8 8.2L20.5 3.5L15.8 10.2L24 12L15.8 13.8L20.5 20.5L13.8 15.8L12 24L10.2 15.8L3.5 20.5L8.2 13.8L0 12L8.2 10.2L3.5 3.5L10.2 8.2L12 0Z" />
-          </svg>
-
-          <span className="h-px bg-gradient-to-l from-transparent via-amber-400/80 to-amber-400 w-20 sm:w-40"></span>
-        </div>
-
-        {/* Heading Section */}
-        <div className="space-y-3">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-wide leading-tight text-white uppercase font-serif drop-shadow-lg">
-            Welcome to Dodola Ifa Boru Special Boarding School
-          </h1>
-          
-          {/* Sub-divider with Stars */}
-          <div className="flex items-center justify-center space-x-3 pt-1">
-            <span className="h-px bg-gradient-to-r from-transparent to-amber-400/60 w-12 sm:w-28"></span>
-            <span className="text-amber-400 text-xs sm:text-sm">✦</span>
-            <span className="text-amber-300 font-semibold text-[11px] sm:text-sm tracking-wider uppercase">
-              The Center of the Fountain of Stars
-            </span>
-            <span className="text-amber-400 text-xs sm:text-sm">✦</span>
-            <span className="h-px bg-gradient-to-l from-transparent to-amber-400/60 w-12 sm:w-28"></span>
+    <PublicPage>
+      <main>
+        <section className="relative overflow-hidden bg-emerald-950 text-white">
+          <div className="absolute inset-0 bg-[url('/campus-hero.jpg')] bg-cover bg-center opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950 via-emerald-950/90 to-emerald-950/40" />
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:px-8">
+            <div className="max-w-3xl">
+              <p className="mb-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-amber-300"><span className="h-px w-8 bg-amber-300" />The center of the fountain of stars</p>
+              <h1 className="public-serif text-4xl leading-[1.1] sm:text-5xl lg:text-6xl">A focused place to learn, live, and lead.</h1>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-emerald-100 sm:text-lg">Dodola Ifa Boru Special Boarding School gives Grade 9–12 students the academic focus, residential structure, and human support they need to grow with purpose.</p>
+              <div className="mt-8 flex flex-wrap gap-3"><Link href="/about" className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-emerald-950 hover:bg-amber-100">Learn about our school <Icon name="arrow" size={16} /></Link><Link href="/login" className="inline-flex items-center gap-2 rounded-xl border border-emerald-700 bg-emerald-900/50 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">Open the school portal <Icon name="lock" size={15} /></Link></div>
+            </div>
+            <div className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur-sm"><p className="text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300">At a glance</p><div className="mt-6 grid grid-cols-2 gap-4"><div className="border-l border-amber-300/70 pl-4"><p className="text-3xl font-black">9–12</p><p className="mt-1 text-xs text-emerald-100">Grade levels</p></div><div className="border-l border-amber-300/70 pl-4"><p className="text-3xl font-black">2</p><p className="mt-1 text-xs text-emerald-100">Academic streams</p></div><div className="border-l border-amber-300/70 pl-4"><p className="text-3xl font-black">24/7</p><p className="mt-1 text-xs text-emerald-100">Boarding support</p></div><div className="border-l border-amber-300/70 pl-4"><p className="text-3xl font-black">1</p><p className="mt-1 text-xs text-emerald-100">Connected portal</p></div></div></div>
           </div>
-
-          <p className="text-xs sm:text-base md:text-lg text-amber-100/90 italic font-serif pt-1">
-            Where Every Mind Shines and Every Future Begins
-          </p>
-        </div>
-
-        {/* Small Diamond Accent */}
-        <div className="flex items-center justify-center space-x-2 py-1">
-          <span className="h-px bg-gradient-to-r from-transparent to-amber-400/70 w-10 sm:w-16"></span>
-          <span className="w-1.5 h-1.5 rotate-45 bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span>
-          <span className="h-px bg-gradient-to-l from-transparent to-amber-400/70 w-10 sm:w-16"></span>
-        </div>
-
-        {/* Core School Statement Paragraph */}
-        <p className="text-xs sm:text-sm md:text-base text-slate-100 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow-md px-2">
-          We believe every student possesses a unique light, exceptional talents, and the potential to achieve greatness. At Dodola Ifa Boru Special Boarding School, we provide a formal, supportive, and inspiring learning environment where students gain knowledge, develop character, discover their abilities, and prepare confidently for the future. Through academic excellence, creativity, discipline, and dedicated guidance, we cultivate a community of bright minds and strong values. Together, we prepare tomorrow&apos;s leaders, innovators, and achievers to make a meaningful difference in the world.
-        </p>
-
-        {/* Custom Ornamental Divider (Matching Reference Image) */}
-        <div className="pt-4 flex items-center justify-center space-x-2 text-amber-400/80">
-          <div className="h-px w-24 sm:w-44 bg-gradient-to-r from-transparent to-amber-400/60"></div>
-          
-          {/* Flourish Accent SVG */}
-          <div className="flex items-center space-x-1">
-            <svg className="w-8 h-3 text-amber-400" viewBox="0 0 40 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M0 6 C10 0, 20 12, 40 6" />
-            </svg>
-            
-            {/* 8-Point Star Centerpiece */}
-            <svg className="w-5 h-5 text-amber-300 drop-shadow-[0_0_6px_rgba(251,191,36,0.8)] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L13.8 8.2L20.5 3.5L15.8 10.2L24 12L15.8 13.8L20.5 20.5L13.8 15.8L12 24L10.2 15.8L3.5 20.5L8.2 13.8L0 12L8.2 10.2L3.5 3.5L10.2 8.2L12 0Z" />
-            </svg>
-
-            <svg className="w-8 h-3 text-amber-400" viewBox="0 0 40 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M0 6 C20 0, 30 12, 40 6" />
-            </svg>
-          </div>
-
-          <div className="h-px w-24 sm:w-44 bg-gradient-to-l from-transparent to-amber-400/60"></div>
-        </div>
-
+        </section>
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Built around the whole student</p><h2 className="public-serif mt-3 text-3xl text-slate-950 sm:text-4xl">Strong days create strong futures.</h2><p className="mt-4 text-sm leading-7 text-slate-600">Our academic, residential, and pastoral systems work together so students can focus on learning while families and staff stay informed.</p></div><div className="mt-10 grid gap-4 md:grid-cols-3">{pillars.map(([title, body, icon]) => <article key={title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700"><Icon name={icon} size={19} /></span><h3 className="mt-5 text-base font-black text-slate-950">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{body}</p></article>)}</div></section>
+        <section className="border-y border-slate-200 bg-white"><div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">For students, families, and staff</p><h2 className="mt-2 text-2xl font-black text-slate-950">One place for the school day.</h2></div><Link href="/login" className="inline-flex items-center gap-2 self-start rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">Go to portal access <Icon name="arrow" size={16} /></Link></div></section>
       </main>
-
-      {/* Bottom Section: 4 Feature Pillars & Footer */}
-      <div className="relative z-20 w-full">
-        
-        {/* 4 Feature Pillars Bar */}
-        <div className="max-w-6xl w-full mx-auto px-4 pb-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 py-3 border-t border-amber-400/30 items-center">
-            
-            {/* Academic Excellence */}
-            <div className="flex items-center justify-center md:justify-start gap-3 px-2 md:border-r border-amber-400/30">
-              <span className="text-amber-400 text-xl sm:text-2xl shrink-0">★</span>
-              <div>
-                <h3 className="text-[11px] sm:text-xs font-bold text-amber-100 tracking-wider uppercase font-serif">
-                  Academic Excellence
-                </h3>
-                <p className="text-[9px] sm:text-[10px] text-slate-300/90 leading-tight">
-                  Rigorous. Inspiring. Future-Focused.
-                </p>
-              </div>
-            </div>
-
-            {/* Character & Values */}
-            <div className="flex items-center justify-center md:justify-start gap-3 px-2 md:border-r border-amber-400/30">
-              <span className="text-amber-400 text-xl sm:text-2xl shrink-0">🏛️</span>
-              <div>
-                <h3 className="text-[11px] sm:text-xs font-bold text-amber-100 tracking-wider uppercase font-serif">
-                  Character &amp; Values
-                </h3>
-                <p className="text-[9px] sm:text-[10px] text-slate-300/90 leading-tight">
-                  Integrity. Respect. Leadership.
-                </p>
-              </div>
-            </div>
-
-            {/* Personal Growth */}
-            <div className="flex items-center justify-center md:justify-start gap-3 px-2 md:border-r border-amber-400/30">
-              <span className="text-amber-400 text-xl sm:text-2xl shrink-0">🌱</span>
-              <div>
-                <h3 className="text-[11px] sm:text-xs font-bold text-amber-100 tracking-wider uppercase font-serif">
-                  Personal Growth
-                </h3>
-                <p className="text-[9px] sm:text-[10px] text-slate-300/90 leading-tight">
-                  Discover. Develop. Achieve.
-                </p>
-              </div>
-            </div>
-
-            {/* Global Impact */}
-            <div className="flex items-center justify-center md:justify-start gap-3 px-2">
-              <span className="text-amber-400 text-xl sm:text-2xl shrink-0">👥</span>
-              <div>
-                <h3 className="text-[11px] sm:text-xs font-bold text-amber-100 tracking-wider uppercase font-serif">
-                  Global Impact
-                </h3>
-                <p className="text-[9px] sm:text-[10px] text-slate-300/90 leading-tight">
-                  Prepared to Lead. Inspired to Serve.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* Footer */}
-        <footer className="bg-slate-950/85 backdrop-blur-md border-t border-amber-400/30 py-4 px-4 text-center text-[11px] sm:text-xs text-slate-300">
-          <p className="font-medium">
-            &copy; 2026 Dodola Ifa Boru Special Boarding School &middot; All rights reserved
-          </p>
-        </footer>
-
-      </div>
-    </div>
+    </PublicPage>
   );
 }

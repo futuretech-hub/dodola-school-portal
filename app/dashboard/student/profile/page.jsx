@@ -1,0 +1,8 @@
+import PortalShell from '../../../../components/PortalShell';
+import { PageIntro, SectionCard, StatusBadge } from '../../../../components/PortalUI';
+import { student } from '../../../../lib/demoData';
+
+export default function ProfilePage() {
+  const fields = [['Full name', student.name], ['Student ID', student.studentId], ['Grade and section', `${student.grade} · ${student.section}`], ['Academic stream', student.stream], ['Residence', student.dorm], ['Academic year', student.academicYear]];
+  return <PortalShell role="student" eyebrow="Account" title="My profile"><PageIntro eyebrow="Student record" title="Your school profile" description="These details are used across academic, boarding, and gate workflows. Contact administration to request a change." /><div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr]"><SectionCard><div className="flex flex-col items-center text-center"><div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-emerald-100 text-2xl font-black text-emerald-800">{student.initials}</div><h2 className="mt-5 text-xl font-black text-slate-950">{student.name}</h2><p className="mt-1 text-sm text-slate-500">{student.grade} · {student.section}</p><StatusBadge tone="success">Active student</StatusBadge></div></SectionCard><SectionCard title="Student details" description="Read-only information from the school record."><dl className="grid gap-5 sm:grid-cols-2">{fields.map(([label, value]) => <div key={label}><dt className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">{label}</dt><dd className="mt-1 text-sm font-semibold text-slate-800">{value}</dd></div>)}</dl></SectionCard></div></PortalShell>;
+}

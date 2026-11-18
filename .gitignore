@@ -1,2 +1,4 @@
-node_modules
-npm install @supabase/supabase-js.env.local
+node_modules/
+.next/
+.env*
+!.env.example
